@@ -94,6 +94,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
         {
             //See if the page is not empty:
             if ()
+            //Check if the webgraph's size is smaller than matrices max size:
+            if ()
         }
         // 4 marks
         // Remove the server with the given name by assigning its connections
@@ -120,7 +122,14 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Note that each server is connected to at least one other server
         public bool AddConnection(string from, string to)
         {
-            
+            //Set variables
+            int i, j;
+            //Creating a connection if origin and destiation exist
+            if ((i = FindServer(from)) > -1 && (j = FindServer(to)) > -1) {
+                if (E[i, j] == false)    //Seek if the connection doesn't exist, then the statement makes the connection exists
+                    return true;
+            }
+            return false;
         }
         // 10 marks
         // Return all servers that would disconnect the server graph into
