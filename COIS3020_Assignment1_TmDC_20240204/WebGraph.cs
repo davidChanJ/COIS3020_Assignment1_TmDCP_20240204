@@ -3,7 +3,7 @@
 
 namespace COIS3020_Assignment1_TmDC_20240204
 {
-    class WebPage
+    public class WebPage
     {
         public string Name { get; set; }
         public string Server { get; set; }

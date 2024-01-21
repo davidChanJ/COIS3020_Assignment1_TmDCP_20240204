@@ -21,22 +21,25 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 P = new List<WebPage>();
             }
         }
+
         private WebServer[] V;
         private bool[,] E;
         private int NumServers;
     
         // 2 marks
         // Create an empty server graph
-        public ServerGraph(int MaxNumServers)
+        public ServerGraph()
         {
             NumServers = 0;
-            V = new WebServer[MaxNumServers];
-            E = new bool[MaxNumServers, MaxNumServers];
+            V = new WebServer[5];
+            E = new bool[5,5] ;
         }
+
         // 2 marks
         // Return the index of the server with the given name; otherwise return -1
         private int FindServer(string name)
         {
+            //@bug-2
             int i; //variable declaring
             for (i = 0; i <NumServers; i++) {
                 if (V[i].Equals(name))
@@ -49,6 +52,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Double the capacity of the server graph with the respect to web servers
         private void DoubleCapacity()
         {
+            //@bug-2
             //variables as new capacity & resize of array:
             int nCapacity = V.Length * 2;
             Array.Resize(ref V, nCapacity);
@@ -69,7 +73,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
         public bool AddServer(string name, string other)
         {
             //Finding if server is not empty, then no add due already exists
-            if(FindServer(name) == -1) return false;
+            if(FindServer(name) != -1) return false;
             //Find if number of servers are larger than server capacity:
             if(NumServers >= V.Length) DoubleCapacity();
 
@@ -79,7 +83,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
             //Setting 
             int indexOther = FindServer(other);
-            if (indexOther == -1) {
+            if (indexOther != -1) {
                 E[NumServers, indexOther] = true;
                 E[indexOther, NumServers] = true;
             }
@@ -92,10 +96,14 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Return true if successful; other return false
         public bool AddWebPage(WebPage w, string name)
         {
-            //See if the page is not empty:
-            if ()
-            //Check if the webgraph's size is smaller than matrices max size:
-            if ()
+            int wIndex = FindServer(name); //Setting index from server
+            //check if the index is not empty
+            if (wIndex != -1){
+                //Add on list
+                V[wIndex].P.Add(w); //Add the webpage on server's list of webpages
+                return true; //Settles as successful
+            }
+            return false;
         }
         // 4 marks
         // Remove the server with the given name by assigning its connections
@@ -135,10 +143,10 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Return all servers that would disconnect the server graph into
         // two or more disjoint graphs if ever one of them would go down
         // Hint: Use a variation of the depth-first search
-        public string[] CriticalServers()
-        {
+        //public string[] CriticalServers()
+        //{
            
-        }
+        //}
         // 6 marks
         // Return the shortest path from one server to another
         // Hint: Use a variation of the breadth-first search
@@ -153,7 +161,12 @@ namespace COIS3020_Assignment1_TmDC_20240204
         {
 
         }
-    
+        
+        //tempororary test:
+        public void doubleCapacity()
+        {
+            DoubleCapacity();
+        }
     }
 }
 
