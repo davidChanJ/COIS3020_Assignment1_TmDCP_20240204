@@ -39,12 +39,12 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Return the index of the server with the given name; otherwise return -1
         private int FindServer(string name)
         {
-            //@bug-2
             int i; //variable declaring
             for (i = 0; i <NumServers; i++) {
-                if (V[i].Equals(name))
+                if (V[i].Name.Equals(name)) {
                     return i;
-                return -1;
+                }
+
             }
             return -1;
         }
@@ -113,16 +113,31 @@ namespace COIS3020_Assignment1_TmDC_20240204
         {
             int i, j; //declaring variables
             
-            if ((i = FindServer(name))> -1) { //Finding if the server is listed
-                NumServers--;
-                V[i] = V[NumServers];         //Switching the end into the selected server
-                for (j = NumServers; j >= 0; j--) {
-                    E[i, j] = E[j, NumServers];
-                    E[j, i] = E[NumServers, j];
-                    return true;
+            if ((i = FindServer(name))> -1 && ((j = FindServer(other)) > -1)) { //Finding if the server is listed
+                //Creating connections by switching from and to
+                // assign connection of name to other
+                for(int h = 0; h < NumServers; h++)
+                {
+                    if (E[i, h] == true) {
+                        E[i, h] = false;
+                        E[j, h] = true;
+                    }
+                        
                 }
+
+                // assign webpage of name to other
+                V[i].Name = V[j].Name;
+
+                // delete name
+                V[j].Name = null;
+
+
+                return true;
             }
             return false;
+
+            //setting indecies
+            //
         }
         // 3 marks
         // Add a connection from one server to another
@@ -134,8 +149,12 @@ namespace COIS3020_Assignment1_TmDC_20240204
             int i, j;
             //Creating a connection if origin and destiation exist
             if ((i = FindServer(from)) > -1 && (j = FindServer(to)) > -1) {
-                if (E[i, j] == false)    //Seek if the connection doesn't exist, then the statement makes the connection exists
+                if (E[i, j] == false) {    //Seek if the connection doesn't exist, then the statement makes the connection exists
+                    //Connecting route from i to j
+                    E[i, j] = true;
+                    //returning
                     return true;
+                }
             }
             return false;
         }
@@ -143,10 +162,12 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Return all servers that would disconnect the server graph into
         // two or more disjoint graphs if ever one of them would go down
         // Hint: Use a variation of the depth-first search
+        
         //public string[] CriticalServers()
         //{
-           
+
         //}
+        
         // 6 marks
         // Return the shortest path from one server to another
         // Hint: Use a variation of the breadth-first search
@@ -159,7 +180,10 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // the names of the webpages it hosts
         public void PrintGraph()
         {
-
+            foreach (var s in E)
+            {
+                Console.WriteLine($"Server: {s.ToString()}");
+            }
         }
         
         //tempororary test:

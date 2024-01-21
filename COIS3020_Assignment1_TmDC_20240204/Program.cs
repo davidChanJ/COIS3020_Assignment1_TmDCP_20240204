@@ -19,6 +19,10 @@ namespace COIS3020_Assignment1_TmDC_20240204
             server.AddServer("meme2", "meme");
             server.AddServer("meme3", "no");
 
+            //try
+            server.AddServer("meme2", "meme3");
+            server.AddServer("meme3", "meme2");
+
             //implement
             server.AddConnection("meme", "meme3");
             WebPage NoSite = new WebPage("333", "no");
@@ -26,7 +30,10 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
             server.RemoveServer("meme3", "meme");
 
-            //server.doubleCapacity();
+            //server.RemoveServer("meme", "no");
+            
+
+            server.doubleCapacity();
         }
     }
 }
