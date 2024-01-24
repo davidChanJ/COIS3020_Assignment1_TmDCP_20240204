@@ -11,6 +11,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
         public static void Main(string[] args)
         {
             //The whole process is for testing
+
+            //Part 1: Testing for ServerGraph
             ServerGraph server = new ServerGraph();
             server.AddServer("meme", "no");
             server.AddServer("meme", "no");
@@ -31,9 +33,15 @@ namespace COIS3020_Assignment1_TmDC_20240204
             server.RemoveServer("meme3", "meme");
 
             //server.RemoveServer("meme", "no");
-            
-
+           
             server.doubleCapacity();
+
+            //Part 2: Testing for WebGraph
+            WebPage Bili = new WebPage("bbb", "nah");
+            server.AddWebPage(Bili, "meme3");
+
+            //Find link:
+            Bili.FindLink("nah");
         }
     }
 }

@@ -44,7 +44,6 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 if (V[i].Name.Equals(name)) {
                     return i;
                 }
-
             }
             return -1;
         }
@@ -111,9 +110,12 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Return true if successful; otherwise return false
         public bool RemoveServer(string name, string other)
         {
-            int i, j; //declaring variables
+            // index of name
+            int i = FindServer(name);
+            // index of other
+            int j = FindServer(other);
             
-            if ((i = FindServer(name))> -1 && ((j = FindServer(other)) > -1)) { //Finding if the server is listed
+            if (i> -1 && j > -1) { //Finding if the server is listed
                 //Creating connections by switching from and to
                 // assign connection of name to other
                 for(int h = 0; h < NumServers; h++)
@@ -126,11 +128,23 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 }
 
                 // assign webpage of name to other
-                V[i].Name = V[j].Name;
+                for (int k = 0; k < V[i].P.Count; k ++)
+                {
+                    //insert page into other server
+                    // V[i].P.Add(i);
+                    V[j].P.Add(V[i].P[k]);
+                }
 
-                // delete name
-                V[j].Name = null;
-
+                //swap i with the last vertex(include V and E)
+                for (int k = 0; k<NumServers; k ++)
+                {
+                    E[i, k] = E[NumServers - 1, k];
+                    E[k, i] = E[k, NumServers - 1];
+                    E[NumServers - 1, k] = false;
+                    E[k, NumServers - 1] = false;
+                }
+                V[i] = V[NumServers - 1];
+                NumServers--;
 
                 return true;
             }
@@ -173,17 +187,63 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Hint: Use a variation of the breadth-first search
         public int ShortestPath(string from, string to)
         {
+            //In theory, using breadth first search can find shortest path quicker.
+
+            int i; //As index
+            bool[] visited = new bool[NumServers];
+
+            for(i = 0; i < NumServers; i++)
+                visited[i] = false;
+            for(i = 0; i < NumServers; i++) {
+                //Checking if not visited
+                if(!visited[i]){
+                    ShortestPath(from, visited);
+                    Console.WriteLine();
+                }
+            }
             return 0;
         }
+
+        //A private method of shortestPath:
+        private void ShortestPath(int i, bool[] visited)
+        {
+            //Setting if visited
+            int j;
+            Queue<int> Q = new Queue<int>();
+
+            Q.Enqueue(i);
+
+            //While loop for counting
+            while (Q.Count != 0)
+            {
+                i = Q.Dequeue();
+                Console.WriteLine(i);
+
+                for (j = 0; j < NumServers; j++)
+                    if (!visited[j] && E[i, j] == false)
+                    {
+                        Q.Enqueue(j);
+                        visited[j] = true;
+                    }
+            }
+        }
+
         // 4 marks
         // Print the name and connections of each server as well as
         // the names of the webpages it hosts
         public void PrintGraph()
         {
-            foreach (var s in E)
+            for (int i = 0; i < NumServers; i++)
             {
-                Console.WriteLine($"Server: {s.ToString()}");
+                Console.WriteLine($"Server name: {V[i].Name}");
+                //Checking if exists, then show connection
+                for(int j = 0; j < NumServers; j++) {
+                    if (E[i, j] == true)
+                        Console.WriteLine("Connection: {0} and {1}: {2}", V[i], V[j], E[i, j]);
+                }
+                Console.WriteLine();
             }
+            Console.WriteLine();
         }
         
         //tempororary test:
