@@ -43,6 +43,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
            
             server.doubleCapacity();
 
+            server.PrintGraph();
+
             //Part 2: Testing for WebGraph
             WebPage Bili = new WebPage("bbb", "nah");
             server.AddWebPage(Bili, "meme3");

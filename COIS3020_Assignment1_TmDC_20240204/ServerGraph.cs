@@ -150,9 +150,38 @@ namespace COIS3020_Assignment1_TmDC_20240204
             }
             return false;
 
-            //setting indecies
-            //
         }
+
+        // Bonus
+        // 3 marks (Bonus)
+        // Remove the webpage from the server with the given name
+        // Return true if successful; otherwise return false -- Method by Sam
+        public bool RemoveWebPage(string webpageName, string serverName)
+        {
+            // Find the server by its name
+            int serverIndex = FindServer(serverName);
+            if (serverIndex == -1)
+            {
+                // Server not found
+                return false;
+            }
+
+            // Get the server
+            WebServer server = V[serverIndex];
+
+            // Find and remove the webpage from the server's list
+            int pageIndex = server.P.FindIndex(page => page.Name == webpageName);
+            if (pageIndex != -1)
+            {
+                // Webpage found, remove it
+                server.P.RemoveAt(pageIndex);
+                return true;
+            }
+
+            // Webpage not found on the server
+            return false;
+        }
+
         // 3 marks
         // Add a connection from one server to another
         // Return true if successful; otherwise return false
@@ -197,7 +226,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             for(i = 0; i < NumServers; i++) {
                 //Checking if not visited
                 if(!visited[i]){
-                    ShortestPath(from, visited);
+                    //ShortestPath(from, visited);
                     Console.WriteLine();
                 }
             }
@@ -231,21 +260,65 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // 4 marks
         // Print the name and connections of each server as well as
         // the names of the webpages it hosts
+        //public void PrintGraph()
+        //{
+        //    for (int i = 0; i < NumServers; i++)
+        //    {
+        //        Console.WriteLine($"Server name: {V[i].Name}");
+        //        //Checking if exists, then show connection
+        //        for(int j = 0; j < NumServers; j++) {
+        //            if (E[i, j] == true)
+        //                Console.WriteLine("Connection: {0} and {1}: {2}", V[i], V[j], E[i, j]);
+        //        }
+        //        Console.WriteLine();
+        //    }
+        //    Console.WriteLine();
+        //}
+
         public void PrintGraph()
         {
             for (int i = 0; i < NumServers; i++)
             {
-                Console.WriteLine($"Server name: {V[i].Name}");
-                //Checking if exists, then show connection
-                for(int j = 0; j < NumServers; j++) {
-                    if (E[i, j] == true)
-                        Console.WriteLine("Connection: {0} and {1}: {2}", V[i], V[j], E[i, j]);
+                WebServer server = V[i];
+
+                // Print server name
+                Console.WriteLine($"Server name: {server.Name}");
+
+                // Print connections
+                Console.Write("Connections: ");
+                bool hasConnections = false;
+                for (int j = 0; j < NumServers; j++)
+                {
+                    if (E[i, j])
+                    {
+                        Console.Write($"{V[j].Name} ");
+                        hasConnections = true;
+                    }
+                }
+                if (!hasConnections)
+                {
+                    Console.Write("None");
                 }
                 Console.WriteLine();
+
+                // Print hosted webpages
+                Console.Write("Hosted WebPages: ");
+                if (server.P.Count > 0)
+                {
+                    foreach (WebPage webpage in server.P)
+                    {
+                        Console.Write($"{webpage.Name} ");
+                    }
+                }
+                else
+                {
+                    Console.Write("None");
+                }
+                Console.WriteLine();
+                Console.WriteLine();
             }
-            Console.WriteLine();
         }
-        
+
         //tempororary test:
         public void doubleCapacity()
         {
