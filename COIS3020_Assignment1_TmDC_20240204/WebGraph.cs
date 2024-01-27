@@ -113,7 +113,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Return the average length of the shortest paths from the webpage with
         // given name to each of its hyperlinks
         // Hint: Use the method ShortestPath in the class ServerGraph
-        public float AvgShortestPaths(string name)
+        public double AvgShortestPaths(string name)
         {
             throw new NotImplementedException();
         }

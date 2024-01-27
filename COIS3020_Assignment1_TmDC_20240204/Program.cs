@@ -12,6 +12,13 @@ namespace COIS3020_Assignment1_TmDC_20240204
         {
             //The whole process is for testing
 
+            //Method progress:
+            //Addserver(): OK
+            //AddConnection(): OK
+            //AddWebPage(): OK
+            //RemoveServer(): OK
+            //DoubleCapacity(): OK
+
             //Part 1: Testing for ServerGraph
             ServerGraph server = new ServerGraph();
             server.AddServer("meme", "no");
