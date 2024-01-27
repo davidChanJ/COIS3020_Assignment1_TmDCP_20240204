@@ -176,11 +176,80 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Return all servers that would disconnect the server graph into
         // two or more disjoint graphs if ever one of them would go down
         // Hint: Use a variation of the depth-first search
-        
-        //public string[] CriticalServers()
-        //{
 
-        //}
+        public string[] CriticalServers()
+        {
+            bool[] visited = new bool[NumServers];
+            int[] discoveryTime = new int[NumServers];
+            int[] low = new int[NumServers];
+            int[] parent = new int[NumServers];
+            bool[] articulationPoint = new bool[NumServers];
+            int time = 0;
+
+            // Initialize arrays
+            for (int i = 0; i < NumServers; i++)
+            {
+                parent[i] = -1;
+                visited[i] = false;
+                articulationPoint[i] = false;
+            }
+
+            // Perform DFS for each unvisited vertex
+            for (int i = 0; i < NumServers; i++)
+            {
+                if (!visited[i])
+                {
+                    CriticalServersDFS(i, visited, discoveryTime, low, parent, ref articulationPoint, ref time);
+                }
+            }
+
+            // Collect and return the names of articulation points
+            List<string> criticalServers = new List<string>();
+            for (int i = 0; i < NumServers; i++)
+            {
+                if (articulationPoint[i])
+                {
+                    criticalServers.Add(V[i].Name);
+                }
+            }
+
+            return criticalServers.ToArray();
+        }
+
+        private void CriticalServersDFS(int u, bool[] visited, int[] discoveryTime, int[] low, int[] parent, ref bool[] articulationPoint, ref int time)
+        {
+            int children = 0;
+            visited[u] = true;
+            discoveryTime[u] = low[u] = ++time;
+
+            for (int v = 0; v < NumServers; v++)
+            {
+                if (E[u, v])
+                {
+                    if (!visited[v])
+                    {
+                        children++;
+                        parent[v] = u;
+                        CriticalServersDFS(v, visited, discoveryTime, low, parent, ref articulationPoint, ref time);
+
+                        // Check if the subtree rooted with v has a connection to one of the ancestors of u
+                        low[u] = Math.Min(low[u], low[v]);
+
+                        // u is an articulation point in following cases:
+                        // (1) u is root of DFS tree and has two or more children.
+                        // (2) If u is not root and low value of one of its children is more than discovery value of u.
+                        if (parent[u] == -1 && children > 1)
+                            articulationPoint[u] = true;
+                        if (parent[u] != -1 && low[v] >= discoveryTime[u])
+                            articulationPoint[u] = true;
+                    }
+                    else if (v != parent[u])
+                    {
+                        low[u] = Math.Min(low[u], discoveryTime[v]);
+                    }
+                }
+            }
+        }
         
         // 6 marks
         // Return the shortest path from one server to another
