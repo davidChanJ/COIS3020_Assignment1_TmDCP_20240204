@@ -18,6 +18,11 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //AddWebPage(): OK
             //RemoveServer(): OK
             //DoubleCapacity(): OK
+            //PrintGraph(): OK
+            //FindServer(): OK
+            //RemoveWebPage(): OK
+            //CriticalServers():
+            //ShortestPath: 
 
             //Part 1: Testing for ServerGraph
             ServerGraph server = new ServerGraph();
@@ -39,18 +44,45 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
             server.RemoveServer("meme3", "meme");
 
+            //Find server
+            Console.WriteLine("Server at: " + server.findServer("meme"));
+            Console.WriteLine("Server at: " + server.findServer("meme2"));
+
             //server.RemoveServer("meme", "no");
-           
+
             server.doubleCapacity();
 
+            Console.WriteLine("One: ");
+            server.PrintGraph();
+
+            server.RemoveWebPage("333", "meme");
+
+            Console.WriteLine("Two: ");
             server.PrintGraph();
 
             //Part 2: Testing for WebGraph
-            WebPage Bili = new WebPage("bbb", "nah");
-            server.AddWebPage(Bili, "meme3");
+            //Method Progress:
+            //FindPage():
+            //AddPage():
+            //RemovePage():
+            //AddLink():
+            //RemoveLink():
+            //AvgShortestPaths():
+            //PrintGraph():
+            
+            //Creating 2 new sample servers
+            ServerGraph SndSeVE = new ServerGraph();
+            ServerGraph Thr = new ServerGraph();
+            //Creating webpages
+            WebPage bal = new WebPage("Bal", "Bal");
+            SndSeVE.AddWebPage(bal, "Bal");
+            //Creating graph
+            WebGraph Bili = new WebGraph();
+            //Adding pages:
+            Bili.AddPage("Mal", "Bal");
+            
 
             //Find link:
-            Bili.FindLink("nah");
         }
     }
 }

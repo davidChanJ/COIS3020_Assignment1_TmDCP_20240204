@@ -324,6 +324,11 @@ namespace COIS3020_Assignment1_TmDC_20240204
         {
             DoubleCapacity();
         }
+
+        public int findServer(string name)
+        {
+            return FindServer(name);
+        }
     }
 }
 
