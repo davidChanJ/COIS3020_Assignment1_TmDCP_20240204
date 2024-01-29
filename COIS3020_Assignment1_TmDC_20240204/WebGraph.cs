@@ -101,9 +101,9 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 return false; // Page not found
 
             //link removing
-            int dIndex = P[fIndex].FindLink(to);
-            if(dIndex == -1) {
-                P[fIndex].E.RemoveAt(dIndex);
+            int dIndex = FindPage(to);
+            if (dIndex != -1) {
+                P[fIndex].E.Remove(P[dIndex]);
                 return true;
             }
             return false; // Link not found
@@ -125,6 +125,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 Console.Write($"Page: {pge.Name}, links: ");
                 foreach (var link in pge.E) 
                     Console.Write(link.Name);
+                Console.WriteLine("; ");
             }
             Console.WriteLine();
         }

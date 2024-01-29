@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,8 +23,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //PrintGraph(): OK
             //FindServer(): OK
             //RemoveWebPage(): OK
-            //CriticalServers():
-            //ShortestPath: 
+            //CriticalServers(): Showing STRING[] as output
+            //ShortestPath: Maybe OK?
 
             //Part 1: Testing for ServerGraph
             ServerGraph server = new ServerGraph();
@@ -60,27 +62,57 @@ namespace COIS3020_Assignment1_TmDC_20240204
             Console.WriteLine("Two: ");
             server.PrintGraph();
 
+            Console.WriteLine("Shortest path between meme2 & meme3: " + server.ShortestPath("meme", "meme2"));
+            Console.WriteLine("Shortest path between meme3 & meme2: " + server.ShortestPath("meme2", "meme"));
+
+            Console.WriteLine(server.CriticalServers() + " as critical servers being done");
+
             //Part 2: Testing for WebGraph
             //Method Progress:
             //FindPage():
-            //AddPage():
-            //RemovePage():
-            //AddLink():
-            //RemoveLink():
+            //AddPage(): OK
+            //RemovePage(): OK
+            //AddLink(): OK
+            //RemoveLink(): OK? tue moi
             //AvgShortestPaths():
             //PrintGraph():
-            
-            //Creating 2 new sample servers
-            ServerGraph SndSeVE = new ServerGraph();
-            ServerGraph Thr = new ServerGraph();
-            //Creating webpages
-            WebPage bal = new WebPage("Bal", "Bal");
-            SndSeVE.AddWebPage(bal, "Bal");
-            //Creating graph
-            WebGraph Bili = new WebGraph();
-            //Adding pages:
-            Bili.AddPage("Mal", "Bal");
-            
+
+            WebGraph webGraph = new WebGraph();
+            WebPage YesSite = new WebPage("555", "nnn");
+
+            //Test for webGraph:
+            webGraph.AddPage("Mahah", "neh");
+            webGraph.AddPage("Masaa", "mol");
+            webGraph.AddPage("Worst site ever", "0");
+            webGraph.AddPage("Malabol", "mol");
+            webGraph.AddPage("Sam", "mol");
+            webGraph.AddPage("Paracal", "mol");
+
+            //Deleting the website
+            webGraph.RemovePage("Worst site ever");
+            webGraph.AddPage("Best page ever creaed!", "100");
+
+            //Adding the link
+            Console.WriteLine(webGraph.AddLink("Mahah", "Masaa"));
+            Console.WriteLine(webGraph.AddLink("Masaa", "Mahah"));
+            Console.WriteLine(webGraph.RemoveLink("Mahah", "Masaa"));
+            Console.WriteLine(webGraph.AddLink("Mahah", "Masaa"));
+            webGraph.AddLink("Worst site ever", "Sam");
+            webGraph.AddLink("Malabol", "Masaa");
+            webGraph.AddLink("Malabol", "Worst site ever");
+            webGraph.AddLink("Malabol", "Sam");
+            webGraph.AddLink("Malabol", "Paracal");
+            webGraph.AddLink("Sam", "Paracal");
+            webGraph.AddLink("Mahah", "Paracal");
+
+            webGraph.PrintGraph();
+
+
+            //Goes for website thing
+            Console.Write(YesSite.FindLink("") + "\n");
+
+            webGraph.PrintGraph();
+
 
             //Find link:
         }
