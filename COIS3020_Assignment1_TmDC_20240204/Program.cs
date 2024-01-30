@@ -69,13 +69,13 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
             //Part 2: Testing for WebGraph
             //Method Progress:
-            //FindPage(): 
+            //FindPage(): sam and pirakash pls kill me
             //AddPage(): OK
             //RemovePage(): OK
             //AddLink(): OK
             //RemoveLink(): OK? tue moi
-            //AvgShortestPaths():
-            //PrintGraph():
+            //AvgShortestPaths(): WIP
+            //PrintGraph(): OK
 
             WebGraph webGraph = new WebGraph();
             WebPage YesSite = new WebPage("555", "nnn");
@@ -104,13 +104,13 @@ namespace COIS3020_Assignment1_TmDC_20240204
             webGraph.AddLink("Malabol", "Paracal");
             webGraph.AddLink("Sam", "Paracal");
             webGraph.AddLink("Mahah", "Paracal");
-            webGraph.AddLink("", "Paracal");
+            webGraph.AddLink("abcd", "Paracal");
 
             webGraph.PrintGraph();
 
 
             //Goes for website thing
-            Console.Write(YesSite.FindLink("") + "\n");
+            Console.Write(YesSite.FindLink("abcd") + "\n");
 
             webGraph.PrintGraph();
 

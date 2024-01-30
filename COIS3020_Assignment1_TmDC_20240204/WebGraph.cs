@@ -17,8 +17,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
         public int FindLink(string name)
         {
             //Searching the link among the matrix via for-loop in indecies;
-            for (int i = 0; i < E.Count; i++) {
-                if (E[i].Name == name){
+            for (int i = 0; i < ; i++) {
+                if (P[i].Name == name){
                     return i; //Returning the index of the link
                 }
             }
