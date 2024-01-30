@@ -115,6 +115,24 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Hint: Use the method ShortestPath in the class ServerGraph
         public double AvgShortestPaths(string name)
         {
+            //Getting index
+            int targetI = FindPage(name);
+            //Check if the page exists
+            if(targetI == -1)
+                return 0;
+
+            //Initilzed that visited and distances:
+            bool[] visitedSites = new bool[P.Count];
+            int[] findDistance = new int[P.Count];
+            //Counting the distance that goes
+            for(int i = 0; i < P.Count; i++){
+                visitedSites[i] = false;
+                findDistance[i] = int.MaxValue;
+            }
+            
+            //Using the queue to find where the search has visited
+            Queue<int> goQ = new Queue<int>();
+
             throw new NotImplementedException();
         }
         // 3 marks

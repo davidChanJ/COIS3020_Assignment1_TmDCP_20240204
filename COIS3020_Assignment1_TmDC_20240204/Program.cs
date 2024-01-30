@@ -20,10 +20,10 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //AddWebPage(): OK
             //RemoveServer(): OK
             //DoubleCapacity(): OK
-            //PrintGraph(): OK
+            //PrintGraph(): OK  (Thank you, Sam)
             //FindServer(): OK
             //RemoveWebPage(): OK
-            //CriticalServers(): Showing STRING[] as output
+            //CriticalServers(): Showing STRING[] as output (Thank you, Sam)
             //ShortestPath: Maybe OK?
 
             //Part 1: Testing for ServerGraph
@@ -69,7 +69,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
             //Part 2: Testing for WebGraph
             //Method Progress:
-            //FindPage():
+            //FindPage(): 
             //AddPage(): OK
             //RemovePage(): OK
             //AddLink(): OK
@@ -99,11 +99,12 @@ namespace COIS3020_Assignment1_TmDC_20240204
             Console.WriteLine(webGraph.AddLink("Mahah", "Masaa"));
             webGraph.AddLink("Worst site ever", "Sam");
             webGraph.AddLink("Malabol", "Masaa");
-            webGraph.AddLink("Malabol", "Worst site ever");
+            webGraph.AddLink("Malabol", "Best page ever creaed!");
             webGraph.AddLink("Malabol", "Sam");
             webGraph.AddLink("Malabol", "Paracal");
             webGraph.AddLink("Sam", "Paracal");
             webGraph.AddLink("Mahah", "Paracal");
+            webGraph.AddLink("", "Paracal");
 
             webGraph.PrintGraph();
 
