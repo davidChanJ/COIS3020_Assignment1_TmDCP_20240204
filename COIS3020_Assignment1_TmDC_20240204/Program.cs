@@ -74,7 +74,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //RemovePage(): OK
             //AddLink(): OK
             //RemoveLink(): OK? tue moi
-            //AvgShortestPaths(): WIP
+            //AvgShortestPaths(): Can work, late to expected
             //PrintGraph(): OK
 
             WebGraph webGraph = new WebGraph();
@@ -110,9 +110,9 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
 
             //Goes for website thing
-            Console.Write(YesSite.FindLink("abcd") + "\n");
-
+            Console.Write(YesSite.FindLink("555") + "\n");
             webGraph.PrintGraph();
+            Console.WriteLine("Average avg shortest paths for Mahah: " + webGraph.AvgShortestPaths("Mahah") );
 
 
             //Find link:

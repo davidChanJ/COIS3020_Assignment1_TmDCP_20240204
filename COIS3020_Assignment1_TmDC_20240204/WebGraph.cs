@@ -17,12 +17,11 @@ namespace COIS3020_Assignment1_TmDC_20240204
         public int FindLink(string name)
         {
             //Searching the link among the matrix via for-loop in indecies;
-            for (int i = 0; i < ; i++) {
-                if (P[i].Name == name){
-                    return i; //Returning the index of the link
-                }
+            for (int i = 0; i < E.Count; i++){ //Finding through the list of websites
+                if (E[i].Name == name)
+                    return i;   //Link connection exists
             }
-            return -1;
+            return -1; //Connection is empty
         }
     }
     class WebGraph
@@ -117,23 +116,20 @@ namespace COIS3020_Assignment1_TmDC_20240204
         {
             //Getting index
             int targetI = FindPage(name);
-            //Check if the page exists
-            if(targetI == -1)
-                return 0;
+            if (targetI == -1)
+                return -1;      //Returns empty if the index does not exist
 
-            //Initilzed that visited and distances:
-            bool[] visitedSites = new bool[P.Count];
-            int[] findDistance = new int[P.Count];
-            //Counting the distance that goes
-            for(int i = 0; i < P.Count; i++){
-                visitedSites[i] = false;
-                findDistance[i] = int.MaxValue;
-            }
+            //Finding distance
+            int totalPathLength = 0;
+            foreach(WebPage link in P[targetI].E)
+                totalPathLength += totalPathLength + 1;
+
+            //Calculate the average:
+            if (P[targetI].E.Count > 0)
+                return (double)totalPathLength / P[targetI].E.Count;
+            else
+                return 0;   //No hyper links, then the average length is 0
             
-            //Using the queue to find where the search has visited
-            Queue<int> goQ = new Queue<int>();
-
-            throw new NotImplementedException();
         }
         // 3 marks
         // Print the name and hyperlinks of each webpage
