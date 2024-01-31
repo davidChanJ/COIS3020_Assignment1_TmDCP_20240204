@@ -14,6 +14,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             Server = host;
             E = new List<WebPage>();
         }
+        //@bug
         public int FindLink(string name)
         {
             //Searching the link among the matrix via for-loop in indecies;

@@ -74,11 +74,12 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //RemovePage(): OK
             //AddLink(): OK
             //RemoveLink(): OK? tue moi
-            //AvgShortestPaths(): Can work, late to expected
+            //AvgShortestPaths(): OK? Can work, late to expected
             //PrintGraph(): OK
 
             WebGraph webGraph = new WebGraph();
             WebPage YesSite = new WebPage("555", "nnn");
+            server.AddWebPage(YesSite, "meme");
 
             //Test for webGraph:
             webGraph.AddPage("Mahah", "neh");
@@ -113,6 +114,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
             Console.Write(YesSite.FindLink("555") + "\n");
             webGraph.PrintGraph();
             Console.WriteLine("Average avg shortest paths for Mahah: " + webGraph.AvgShortestPaths("Mahah") );
+            NoSite.FindLink("Malabol");
+            YesSite.FindLink("Malabol");
 
 
             //Find link:
