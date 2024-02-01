@@ -111,11 +111,11 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
 
             //Goes for website thing
-            Console.Write(YesSite.FindLink("555") + "\n");
+            Console.Write(YesSite.FindLink("Sam") + "\n");
             webGraph.PrintGraph();
             Console.WriteLine("Average avg shortest paths for Mahah: " + webGraph.AvgShortestPaths("Mahah") );
-            NoSite.FindLink("Malabol");
-            YesSite.FindLink("Malabol");
+            Console.Write(NoSite.FindLink("Malabol") + "\n");
+            Console.WriteLine("\n" + YesSite.FindLink("Malabol"));
 
 
             //Find link:

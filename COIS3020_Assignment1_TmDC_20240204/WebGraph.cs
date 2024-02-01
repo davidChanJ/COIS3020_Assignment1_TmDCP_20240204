@@ -17,12 +17,13 @@ namespace COIS3020_Assignment1_TmDC_20240204
         //@bug
         public int FindLink(string name)
         {
-            //Searching the link among the matrix via for-loop in indecies;
-            for (int i = 0; i < E.Count; i++){ //Finding through the list of websites
+            ////Searching the link among the matrix via for-loop in indecies;
+            for (int i = 0; i < E.Count; i++)
+            { //finding through the list of websites
                 if (E[i].Name == name)
-                    return i;   //Link connection exists
+                    return i;   //link connection exists
             }
-            return -1; //Connection is empty
+            return -1; //connection is empty
         }
     }
     class WebGraph
