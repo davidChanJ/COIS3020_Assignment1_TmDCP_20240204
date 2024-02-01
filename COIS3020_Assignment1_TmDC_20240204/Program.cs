@@ -24,7 +24,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //FindServer(): OK
             //RemoveWebPage(): OK
             //CriticalServers(): Showing STRING[] as output (Thank you, Sam)
-            //ShortestPath: Maybe OK?
+            //ShortestPath: OK
 
             //Part 1: Testing for ServerGraph
             ServerGraph server = new ServerGraph();
