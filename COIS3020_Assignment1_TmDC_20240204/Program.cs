@@ -82,16 +82,16 @@ namespace COIS3020_Assignment1_TmDC_20240204
             server.AddWebPage(YesSite, "meme");
 
             //Test for webGraph:
-            webGraph.AddPage("Mahah", "neh");
-            webGraph.AddPage("Masaa", "mol");
-            webGraph.AddPage("Worst site ever", "0");
-            webGraph.AddPage("Malabol", "mol");
-            webGraph.AddPage("Sam", "mol");
-            webGraph.AddPage("Paracal", "mol");
+            webGraph.AddPage("Mahah", "neh", server);
+            webGraph.AddPage("Masaa", "mol", server);
+            webGraph.AddPage("Worst site ever", "0", server);
+            webGraph.AddPage("Malabol", "mol", server);
+            webGraph.AddPage("Sam", "mol", server);
+            webGraph.AddPage("Paracal", "mol", server);
 
             //Deleting the website
-            webGraph.RemovePage("Worst site ever");
-            webGraph.AddPage("Best page ever creaed!", "100");
+            webGraph.RemovePage("Worst site ever", server);
+            webGraph.AddPage("Best page ever creaed!", "100", server);
 
             //Adding the link
             Console.WriteLine(webGraph.AddLink("Mahah", "Masaa"));
@@ -113,7 +113,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //Goes for website thing
             Console.Write(YesSite.FindLink("Sam") + "\n");
             webGraph.PrintGraph();
-            Console.WriteLine("Average avg shortest paths for Mahah: " + webGraph.AvgShortestPaths("Mahah") );
+            Console.WriteLine("Average avg shortest paths for Mahah: " + webGraph.AvgShortestPaths("Mahah", server) );
             Console.Write(NoSite.FindLink("Malabol") + "\n");
             Console.WriteLine("\n" + YesSite.FindLink("Malabol"));
 

@@ -9,7 +9,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
     public class ServerGraph
     {
         // 3 marks
-        private class WebServer
+        public class WebServer
         {
             public string Name;
             public List<WebPage> P;
@@ -23,10 +23,11 @@ namespace COIS3020_Assignment1_TmDC_20240204
         }
 
         private WebServer[] V;
+        public WebServer[] VValue { get { return V; } }
         private bool[,] E;
         private int NumServers;
+        public int NumServersValue { get { return NumServers; } }
     
-        // 2 marks
         // Create an empty server graph
         public ServerGraph()
         {
@@ -35,23 +36,20 @@ namespace COIS3020_Assignment1_TmDC_20240204
             E = new bool[5,5] ;
         }
 
-        // 2 marks
         // Return the index of the server with the given name; otherwise return -1
         private int FindServer(string name)
         {
-            int i; //variable declaring
-            for (i = 0; i <NumServers; i++) {
+            for (int i = 0; i <NumServers; i++) {
                 if (V[i].Name.Equals(name)) {
                     return i;
                 }
             }
             return -1;
         }
-        // 3 marks
+
         // Double the capacity of the server graph with the respect to web servers
         private void DoubleCapacity()
         {
-            //@bug-2
             //variables as new capacity & resize of array:
             int nCapacity = V.Length * 2;
             Array.Resize(ref V, nCapacity);
@@ -66,45 +64,50 @@ namespace COIS3020_Assignment1_TmDC_20240204
             }
             E = nEMatrix;
         }
-        // 3 marks
+
         // Add a server with the given name and connect it to the other server
         // Return true if successful; otherwise return false
         public bool AddServer(string name, string other)
         {
-            //Finding if server is not empty, then no add due already exists
+            // return false if server is already exists
             if(FindServer(name) != -1) return false;
-            //Find if number of servers are larger than server capacity:
+
+            // double the capacity if NumServers >= V.Length
             if(NumServers >= V.Length) DoubleCapacity();
 
-            //Whole process to create a new server:
+            // create new web server with given name
             WebServer nServer = new WebServer(name);
             V[NumServers] = nServer;
 
-            //Setting 
+            // connect the new server with other server
             int indexOther = FindServer(other);
             if (indexOther != -1) {
                 E[NumServers, indexOther] = true;
                 E[indexOther, NumServers] = true;
             }
 
-            NumServers++; //An increase
+            // increase NumServers by 1
+            NumServers++;
             return true;
         }
-        // 3 marks
+
         // Add a webpage to the server with the given name
         // Return true if successful; other return false
         public bool AddWebPage(WebPage w, string name)
         {
-            int wIndex = FindServer(name); //Setting index from server
-            //check if the index is not empty
-            if (wIndex != -1){
-                //Add on list
-                V[wIndex].P.Add(w); //Add the webpage on server's list of webpages
-                return true; //Settles as successful
+            // get the index of server with the given name
+            int serverIndex = FindServer(name);
+            //return false if server with the given name is not exist
+            if (serverIndex == -1)
+            {
+                return false;
             }
-            return false;
+
+            // add webpage to the sever
+            V[serverIndex].P.Add(w);
+            return true; 
         }
-        // 4 marks
+
         // Remove the server with the given name by assigning its connections
         // and webpages to the other server
         // Return true if successful; otherwise return false
@@ -122,7 +125,9 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 {
                     if (E[i, h] == true) {
                         E[i, h] = false;
+                        E[h, i] = false;
                         E[j, h] = true;
+                        E[h, j] = true;
                     }
                         
                 }
@@ -131,7 +136,6 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 for (int k = 0; k < V[i].P.Count; k ++)
                 {
                     //insert page into other server
-                    // V[i].P.Add(i);
                     V[j].P.Add(V[i].P[k]);
                 }
 
@@ -195,7 +199,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 if (E[i, j] == false) {    //Seek if the connection doesn't exist, then the statement makes the connection exists
                     //Connecting route from i to j
                     E[i, j] = true;
-                    //returning
+                    E[j, i] = true;
                     return true;
                 }
             }
@@ -421,6 +425,22 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 Console.WriteLine();
                 Console.WriteLine();
             }
+        }
+
+        public string GetServerNameByWebPageName(string webPageName)
+        {
+            foreach(WebServer webServer in V)
+            {
+                foreach(WebPage webPage in webServer.P)
+                {
+                    if (webPage.Name.Equals(webPageName))
+                    {
+                        return webServer.Name;
+                    }
+                }
+            }
+
+            return "";
         }
 
         //tempororary test:
