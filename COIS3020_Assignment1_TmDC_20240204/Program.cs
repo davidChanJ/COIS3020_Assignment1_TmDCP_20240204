@@ -30,6 +30,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //Determine the articulation points of the remaining internet
             string[] articulationPoints = serverGraph.CriticalServers();
 
+            //Output parts
             Console.WriteLine("Articulation Points: ");
             foreach (string point in articulationPoints)
                 Console.WriteLine(point);

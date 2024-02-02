@@ -231,9 +231,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             for (int i = 0; i < NumServers; i++)
             {
                 if (!visited[i])
-                {
                     CriticalServersDFS(i, visited, discoveryTime, low, parent, ref articulationPoint, ref time);
-                }
             }
 
             // Collect and return the names of articulation points
@@ -241,9 +239,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             for (int i = 0; i < NumServers; i++)
             {
                 if (articulationPoint[i])
-                {
                     criticalServers.Add(V[i].Name);
-                }
             }
 
             return criticalServers.ToArray();
@@ -277,9 +273,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
                             articulationPoint[u] = true;
                     }
                     else if (v != parent[u])
-                    {
                         low[u] = Math.Min(low[u], discoveryTime[v]);
-                    }
                 }
             }
         }
@@ -364,25 +358,6 @@ namespace COIS3020_Assignment1_TmDC_20240204
                     }
             }
         }
-
-        // 4 marks
-        // Print the name and connections of each server as well as
-        // the names of the webpages it hosts
-        //public void PrintGraph()
-        //{
-        //    for (int i = 0; i < NumServers; i++)
-        //    {
-        //        Console.WriteLine($"Server name: {V[i].Name}");
-        //        //Checking if exists, then show connection
-        //        for(int j = 0; j < NumServers; j++) {
-        //            if (E[i, j] == true)
-        //                Console.WriteLine("Connection: {0} and {1}: {2}", V[i], V[j], E[i, j]);
-        //        }
-        //        Console.WriteLine();
-        //    }
-        //    Console.WriteLine();
-        //}
-
         public void PrintGraph()
         {
             for (int i = 0; i < NumServers; i++)

@@ -8,15 +8,6 @@ namespace COIS3020_Assignment1_TmDC_20240204
 {
     internal class Test
     {
-        //public static void Main(string[] args)
-        //{
-        //    //Doing test on some parts
-            
-        //}
-    }
-
-    internal class TestServerGraph
-    {
         public static void testFindServer()
         {
             //The whole process is for testing
@@ -127,5 +118,10 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
             //Find link:
         }
+
+    }
+
+    internal class TestServerGraph
+    {
     }
 }
