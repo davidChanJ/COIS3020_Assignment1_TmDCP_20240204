@@ -28,37 +28,38 @@ namespace COIS3020_Assignment1_TmDC_20240204
             Console.WriteLine("Test 1 Creating ServerGraph:");
             ServerGraph server = new ServerGraph();
 
-            if (server.AddServer("meme", "no") == true) {
-                Console.WriteLine("The AddServer method is working, now ('meme','no') is connected! \n");
-                server.AddServer("meme", "no");
-                server.AddServer("meme", "no");
+            if (server.AddServer("server", "no") == true) {
+                Console.WriteLine("The AddServer method is working, now ('server','no') is connected! \n");
+                server.AddServer("server", "no");
+                server.AddServer("server", "no");
             }
-            else Console.WriteLine("god please kill me");
+            else Console.WriteLine("Failed");
 
             //will have bugs currently
-            server.AddServer("meme2", "meme");
-            server.AddServer("meme3", "no");
+            server.AddServer("server2", "server");
+            server.AddServer("server3", "no");
 
             //try
-            server.AddServer("meme2", "meme3");
-            server.AddServer("meme3", "meme2");
+            server.AddServer("server2", "server3");
+            server.AddServer("server3", "server2");
 
             //implement (Test for AddConnection)
-
-            if(server.AddConnection("meme", "meme3") == true)
+            Console.WriteLine("Test 2 Creating Connections:");
+            if(server.AddConnection("server", "server3") == true)
             {
                 Console.WriteLine("The AddConnection method is working, now ('meme','no') is connected! \n");
-                server.AddConnection("meme", "meme3");
+                server.AddConnection("server", "server3");
             }
-            else Console.WriteLine("god please kill me");
+            else Console.WriteLine("Failed");
 
             WebPage NoSite = new WebPage("333", "no");
             server.AddWebPage(NoSite, "meme3");
 
             //Removing a server
-            if(server.RemoveServer("meme3", "meme") == true)
+            Console.WriteLine("Test 3 Removing a server:");
+            if (server.RemoveServer("server3", "server") == true)
             {
-                server.RemoveServer("meme3", "meme");
+                server.RemoveServer("server3", "server");
                 Console.WriteLine("The RemoveServer method is working, now ('meme','no') is connected! \n");
             }
 
@@ -66,8 +67,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
             //Find server
             Console.WriteLine("Finding the Server:");
-            Console.WriteLine("Server at: " + server.findServer("meme"));
-            Console.WriteLine("Server at: " + server.findServer("meme2"));
+            Console.WriteLine("Server at: " + server.findServer("server"));
+            Console.WriteLine("Server at: " + server.findServer("server2"));
             Console.WriteLine("If the numbers show non -1 values, then the findServer works");
 
             //server.RemoveServer("meme", "no");
@@ -83,8 +84,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
             server.PrintGraph();
 
             Console.WriteLine("Testing Shortest Path test:");
-            Console.WriteLine("Shortest path between meme2 & meme3: " + server.ShortestPath("meme", "meme2"));
-            Console.WriteLine("Shortest path between meme3 & meme2: " + server.ShortestPath("meme2", "meme"));
+            Console.WriteLine("Shortest path between server2 & server3: " + server.ShortestPath("server2", "server3"));
+            Console.WriteLine("Shortest path between server3 & server2: " + server.ShortestPath("server3", "server2"));
             Console.WriteLine("Showing numbers can mean ShortestPath() works");
 
             Console.WriteLine(server.CriticalServers() + " as critical servers being done");
@@ -99,35 +100,35 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //AvgShortestPaths(): OK? Can work, late to expected
             //PrintGraph(): OK
 
-            //WebGraph webGraph = new WebGraph();
-            //WebPage YesSite = new WebPage("555", "nnn");
-            //server.AddWebPage(YesSite, "meme");
+            WebGraph webGraph = new WebGraph();
+            WebPage YesSite = new WebPage("555", "nnn");
+            server.AddWebPage(YesSite, "meme");
 
-            ////Test for webGraph:
-            //webGraph.AddPage("Mahah", "neh", server);
-            //webGraph.AddPage("Masaa", "mol", server);
-            //webGraph.AddPage("Worst site ever", "0", server);
-            //webGraph.AddPage("Malabol", "mol", server);
-            //webGraph.AddPage("Sam", "mol", server);
-            //webGraph.AddPage("Paracal", "mol", server);
+            //Test for webGraph:
+            webGraph.AddPage("Mahah", "neh", server);
+            webGraph.AddPage("Masaa", "mol", server);
+            webGraph.AddPage("Worst site ever", "0", server);
+            webGraph.AddPage("Malabol", "mol", server);
+            webGraph.AddPage("Sam", "mol", server);
+            webGraph.AddPage("Paracal", "mol", server);
 
-            ////Deleting the website
-            //webGraph.RemovePage("Worst site ever", server);
-            //webGraph.AddPage("Best page ever creaed!", "100", server);
+            //Deleting the website
+            webGraph.RemovePage("Worst site ever", server);
+            webGraph.AddPage("Best page ever creaed!", "100", server);
 
-            ////Adding the link
-            //Console.WriteLine(webGraph.AddLink("Mahah", "Masaa"));
-            //Console.WriteLine(webGraph.AddLink("Masaa", "Mahah"));
-            //Console.WriteLine(webGraph.RemoveLink("Mahah", "Masaa"));
-            //Console.WriteLine(webGraph.AddLink("Mahah", "Masaa"));
-            //webGraph.AddLink("Worst site ever", "Sam");
-            //webGraph.AddLink("Malabol", "Masaa");
-            //webGraph.AddLink("Malabol", "Best page ever creaed!");
-            //webGraph.AddLink("Malabol", "Sam");
-            //webGraph.AddLink("Malabol", "Paracal");
-            //webGraph.AddLink("Sam", "Paracal");
-            //webGraph.AddLink("Mahah", "Paracal");
-            //webGraph.AddLink("abcd", "Paracal");
+            //Adding the link
+            Console.WriteLine(webGraph.AddLink("Mahah", "Masaa"));
+            Console.WriteLine(webGraph.AddLink("Masaa", "Mahah"));
+            Console.WriteLine(webGraph.RemoveLink("Mahah", "Masaa"));
+            Console.WriteLine(webGraph.AddLink("Mahah", "Masaa"));
+            webGraph.AddLink("Worst site ever", "Sam");
+            webGraph.AddLink("Malabol", "Masaa");
+            webGraph.AddLink("Malabol", "Best page ever creaed!");
+            webGraph.AddLink("Malabol", "Sam");
+            webGraph.AddLink("Malabol", "Paracal");
+            webGraph.AddLink("Sam", "Paracal");
+            webGraph.AddLink("Mahah", "Paracal");
+            webGraph.AddLink("abcd", "Paracal");
 
             //webGraph.PrintGraph();
 
