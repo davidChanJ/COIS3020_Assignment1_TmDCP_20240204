@@ -56,23 +56,32 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Return true if successful; otherwise return false
         public bool AddPage(string name, string host, ServerGraph S)
         {
-            if (FindPage(name) != -1)
+            //if (FindPage(name) != -1)
+            //{
+            //    return false; // Means page with name assigned already exists
+            //}
+            ////Process of creating a webpage:
+            //WebPage np = new WebPage(name, host);
+
+            //// add webpage to server
+            //// if return false means host is not exist and not adding the new page to P
+            //if (!S.AddWebPage(np, host))
+            //{
+            //    return false;
+            //}
+            //P.Add(np);
+            //return true;
+
+            //Updated part:
+            // 4 marks Pirakash
+            // Add a webpage with the given name and store it on the host server // Return true if successful; otherwise return false 
+                // Implementation for adding a page
+            if (FindPage(name) == -1)
             {
-                return false; // Means page with name assigned already exists
+                P.Add(new WebPage(name, host));
+                return true;
             }
-            //Process of creating a webpage:
-            WebPage np = new WebPage(name, host);
-
-            // add webpage to server
-            // if return false means host is not exist and not adding the new page to P
-            if (!S.AddWebPage(np, host))
-            {
-                return false;
-            }
-            P.Add(np);
-            return true;
-
-
+            return false;
         }
         // 8 marks
         // Remove the webpage with the given name, including the hyperlinks

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //PrintGraph(): OK  (5)
             //FindServer(): OK  (6)
             //RemoveWebPage(): OK (7)
-            //CriticalServers(): Showing STRING[] as output (Thank you, Sam)
-            //ShortestPath: OK
+            //CriticalServers(): Showing STRING[] as output (Thank you, Sam) (9)
+            //ShortestPath: OK (8)
 
             //Part 1: Testing for ServerGraph
             Console.WriteLine("Test 1 Creating ServerGraph:");
@@ -53,7 +54,15 @@ namespace COIS3020_Assignment1_TmDC_20240204
             else Console.WriteLine("Failed \n");
 
             WebPage NoSite = new WebPage("333", "no");
-            server.AddWebPage(NoSite, "server3");
+            
+            Console.WriteLine("Test 2 1/2 Creating a WebPage:");
+            if (server.AddWebPage(NoSite, "server2") == true)
+            {
+                server.AddWebPage(NoSite, "server2");
+                Console.WriteLine("The AddWebPage method is working, the NoPage WebPage is created! \n");
+
+            }
+            else Console.WriteLine("Failed \n");
 
             //Removing a server
             Console.WriteLine("Test 3 Removing a server:");
@@ -79,9 +88,9 @@ namespace COIS3020_Assignment1_TmDC_20240204
             server.PrintGraph();
 
             Console.WriteLine("Test 7 Removing a server");
-            if (server.RemoveWebPage("333", "no") == true) {
-                server.RemoveWebPage("333", "no");
-                Console.WriteLine("The WebPage is removed 333 hosted by no completed \n");
+            if (server.RemoveWebPage("333", "server2") == true) {
+                server.RemoveWebPage("333", "server2");
+                Console.WriteLine("The WebPage is removed 333 hosted by server2 completed \n");
             }
             else
                 Console.WriteLine("Failed \n");
@@ -92,50 +101,72 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
             //(8)
             Console.WriteLine("\nTest 8 Shortest Path: ");
-            Console.WriteLine("Shortest path between server2 & server3: " + server.ShortestPath("server2", "server3"));
-            Console.WriteLine("Shortest path between server3 & server2: " + server.ShortestPath("server3", "server2"));
+            Console.WriteLine("Shortest path between server & server2: " + server.ShortestPath("server", "server2"));
+            Console.WriteLine("Shortest path between server2 & server: " + server.ShortestPath("server2", "server"));
             Console.WriteLine("Showing numbers can mean ShortestPath() works");
 
             //(9)
             Console.WriteLine("\nTest 9 CriticalServers method: ");
-            string[] critSev = server.CriticalServers2();
+            string[] critSev = server.CriticalServers();
             if (critSev.Length > 0)
             {
                 Console.WriteLine("Critial Server: " + string.Join(", ", critSev) + "\n");
             }
+            else Console.WriteLine("Failed \n");
 
             //Part 2: Testing for WebGraph
             //Method Progress:
-            //FindPage(): sam and pirakash pls kill me
-            //AddPage(): OK
-            //RemovePage(): OK
-            //AddLink(): OK
-            //RemoveLink(): OK? tue moi
+            //FindPage(): 
+            //AddPage(): OK (10)
+            //RemovePage(): OK (11)
+            //AddLink(): OK (12)
+            //RemoveLink(): OK? tue moi (12)
             //AvgShortestPaths(): OK? Can work, late to expected
             //PrintGraph(): OK
 
             WebGraph webGraph = new WebGraph();
             WebPage YesSite = new WebPage("555", "nnn");
+
             server.AddWebPage(YesSite, "meme");
 
             //Test for webGraph:
-            Console.WriteLine("Test -- AddPage in WebGraph.cs");
+            Console.WriteLine("\nTest 10 -- AddPage in WebGraph.cs");
 
             webGraph.AddPage("Mahah", "neh", server);
             webGraph.AddPage("Masaa", "mol", server);
             webGraph.AddPage("Worst site ever", "0", server);
             webGraph.AddPage("Malabol", "mol", server);
             webGraph.AddPage("Sam", "mol", server);
-            webGraph.AddPage("Paracal", "mol", server);
+
+            if (webGraph.AddPage("Paracal", "mol", server) == true)
+            {
+                webGraph.AddPage("Paracal", "mol", server);
+                Console.WriteLine("The AddPage method is working\n");
+            }
+            else Console.WriteLine("Failed\n");
+            Console.WriteLine("----The above graph are the results---- ");
 
             //Deleting the website
-            webGraph.RemovePage("Worst site ever", server);
+            Console.WriteLine("\nTest 11 -- RemovePage in WebGraph.cs");
+            if(webGraph.RemovePage("Worst site ever", server) == true)
+            {
+                webGraph.RemovePage("Worst site ever", server);
+                Console.WriteLine("The 'Worst site ever' website is removed from server");
+            }
+            else Console.WriteLine("Failed\n");
             webGraph.AddPage("Best page ever creaed!", "100", server);
 
             //Adding the link
+            Console.WriteLine("\nTest 12 -- AddLink in WebGraph.cs");
+            Console.WriteLine("The booleans of Mahah & Massa, Masaa & Mahah, and Mahah & Masaa be shown:");
             Console.WriteLine(webGraph.AddLink("Mahah", "Masaa"));
             Console.WriteLine(webGraph.AddLink("Masaa", "Mahah"));
-            Console.WriteLine(webGraph.RemoveLink("Mahah", "Masaa"));
+
+            if (webGraph.RemoveLink("Mahah", "Masaa") == true)
+                Console.WriteLine(webGraph.RemoveLink("Mahah", "Masaa") + " <-- The value is showing the link is removed");
+            else
+                Console.WriteLine("The RemoveLink('Mahah', 'Masaa') is failed to use");
+
             Console.WriteLine(webGraph.AddLink("Mahah", "Masaa"));
             webGraph.AddLink("Worst site ever", "Sam");
             webGraph.AddLink("Malabol", "Masaa");
