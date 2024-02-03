@@ -210,7 +210,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // two or more disjoint graphs if ever one of them would go down
         // Hint: Use a variation of the depth-first search
 
-        public string[] CriticalServers()
+        public string[] CriticalServers2()
         {
             bool[] visited = new bool[NumServers];
             int[] discoveryTime = new int[NumServers];
@@ -283,6 +283,42 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 }
             }
         }
+
+        public string[] CriticalServers()
+        {
+            //string[] criticalServers = new string[NumServers];
+            List<string> criticalServers = new List<string>();
+            for (int i = 0; i < NumServers; i++)
+            {
+                bool[] visited = new bool[NumServers];
+                // assume i is the critical point
+                visited[i] = true;
+                dfs(i, visited);
+                int numberOfVisited = visited.Count(c => c);
+                // if i is critical point, numerOfVisited is then smaller than NumServers
+                if (numberOfVisited < NumServers)
+                {
+                    criticalServers.Add(V[i].Name);
+                }
+            }
+            return criticalServers.ToArray();
+        }
+
+        private void dfs(int index, bool[] visited)
+        {
+            for (int i = 0; i < NumServers; i ++)
+            {
+                if (E[index, i])
+                {
+                    if (!visited[i])
+                    {
+                        visited[index] = true;
+                        dfs(i, visited);
+                    }
+                }
+            }
+        }
+
 
         // 6 marks
         // Return the shortest path from one server to another
