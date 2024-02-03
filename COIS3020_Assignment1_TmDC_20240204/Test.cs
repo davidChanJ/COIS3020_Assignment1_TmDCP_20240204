@@ -13,12 +13,12 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //The whole process is for testing
 
             //Method progress:
-            //Addserver(): OK
-            //AddConnection(): OK
+            //Addserver(): OK (1)
+            //AddConnection(): OK (2)
             //AddWebPage(): OK
-            //RemoveServer(): OK
-            //DoubleCapacity(): OK
-            //PrintGraph(): OK  (Thank you, Sam)
+            //RemoveServer(): OK (3)
+            //DoubleCapacity(): OK (4)
+            //PrintGraph(): OK  (5)
             //FindServer(): OK
             //RemoveWebPage(): OK
             //CriticalServers(): Showing STRING[] as output (Thank you, Sam)
@@ -47,33 +47,34 @@ namespace COIS3020_Assignment1_TmDC_20240204
             Console.WriteLine("Test 2 Creating Connections:");
             if(server.AddConnection("server", "server3") == true)
             {
-                Console.WriteLine("The AddConnection method is working, now ('meme','no') is connected! \n");
+                Console.WriteLine("The AddConnection method is working, now ('server','server3') is connected! \n");
                 server.AddConnection("server", "server3");
             }
             else Console.WriteLine("Failed");
 
             WebPage NoSite = new WebPage("333", "no");
-            server.AddWebPage(NoSite, "meme3");
+            server.AddWebPage(NoSite, "server3");
 
             //Removing a server
             Console.WriteLine("Test 3 Removing a server:");
             if (server.RemoveServer("server3", "server") == true)
             {
                 server.RemoveServer("server3", "server");
-                Console.WriteLine("The RemoveServer method is working, now ('meme','no') is connected! \n");
+                Console.WriteLine("The RemoveServer method is working, now ('server3','server') is connected! \n");
             }
 
             else Console.WriteLine("god please kill me\n");
 
             //Find server
-            Console.WriteLine("Finding the Server:");
+            Console.WriteLine("Test 4 Finding the Server:");
             Console.WriteLine("Server at: " + server.findServer("server"));
             Console.WriteLine("Server at: " + server.findServer("server2"));
             Console.WriteLine("If the numbers show non -1 values, then the findServer works");
 
-            //server.RemoveServer("meme", "no");
+            //Double capacity
             server.doubleCapacity();
 
+            //Printing graphs
             Console.WriteLine("Printing graphs: \n");
             Console.WriteLine("One: ");
             server.PrintGraph();
@@ -88,7 +89,11 @@ namespace COIS3020_Assignment1_TmDC_20240204
             Console.WriteLine("Shortest path between server3 & server2: " + server.ShortestPath("server3", "server2"));
             Console.WriteLine("Showing numbers can mean ShortestPath() works");
 
-            Console.WriteLine(server.CriticalServers() + " as critical servers being done");
+            string[] critSev = server.CriticalServers();
+            if (critSev.Length > 0)
+            {
+                Console.WriteLine(string.Join(", ", critSev));
+            }
 
             //Part 2: Testing for WebGraph
             //Method Progress:
@@ -105,6 +110,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
             server.AddWebPage(YesSite, "meme");
 
             //Test for webGraph:
+            Console.WriteLine("Test -- AddPage in WebGraph.cs");
+
             webGraph.AddPage("Mahah", "neh", server);
             webGraph.AddPage("Masaa", "mol", server);
             webGraph.AddPage("Worst site ever", "0", server);

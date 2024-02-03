@@ -12,6 +12,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
     {
         public static void Main(string[] args)
         {
+            //Testing
+            Test.testInternet();
             // Instantiate a server graph and a web graph
             ServerGraph sg = new ServerGraph();
             WebGraph wg = new WebGraph();
@@ -61,7 +63,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
             if (articulationPoints.Length > 0)
             {
                 Console.WriteLine(string.Join(", ", articulationPoints));
-            } else
+            }
+            else
             {
                 Console.WriteLine("none");
             }
