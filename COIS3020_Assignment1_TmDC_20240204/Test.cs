@@ -8,7 +8,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
 {
     internal class Test
     {
-        public static void testFindServer()
+        public static void testInternet()
         {
             //The whole process is for testing
 
@@ -25,6 +25,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //ShortestPath: OK
 
             //Part 1: Testing for ServerGraph
+            Console.Write("Test 1 Creating ServerGraph:");
             ServerGraph server = new ServerGraph();
             server.AddServer("meme", "no");
             server.AddServer("meme", "no");
@@ -119,9 +120,54 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //Find link:
         }
 
-    }
+        //public static void testFromSam()
+        //{
+        //    // Create a ServerGraph
+        //    ServerGraph serverGraph = new ServerGraph();
 
-    internal class TestServerGraph
-    {
+        //    // Add servers
+        //    serverGraph.AddServer("Server1", null);
+        //    serverGraph.AddServer("Server2", null);
+
+        //    // Create a WebGraph
+        //    WebGraph webGraph = new WebGraph();
+
+        //    // Add webpages and specify which server they're hosted on
+        //    webGraph.AddPage("Page1", "Server1", serverGraph);
+        //    webGraph.AddPage("Page2", "Server2", serverGraph);
+        //    webGraph.AddPage("Page3", "Server2", serverGraph);
+        //    webGraph.AddPage("Page4", "Server2", serverGraph);
+
+        //    // Add links from Page1 to Page3 and Page4
+        //    webGraph.AddLink("Page1", "Page3");
+        //    webGraph.AddLink("Page1", "Page4");
+
+        //    // Now, add a link from Page1 to Page2
+        //    bool linkAdded = webGraph.AddLink("Page1", "Page2");
+
+        //    // Verify if the link was added successfully
+        //    if (linkAdded)
+        //    {
+        //        Console.WriteLine("Link from Page1 to Page2 was added successfully.");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Failed to add link from Page1 to Page2.");
+        //    }
+
+        //    // Use FindLink method to check for the link's existence
+        //    int linkIndex = webGraph.P.First(wp => wp.Name == "Page1").FindLink("Page2");
+
+        //    // Print result
+        //    if (linkIndex != -1)
+        //    {
+        //        Console.WriteLine($"Link from Page1 to Page2 found at index: {linkIndex}");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Link from Page1 to Page2 not found.");
+        //    }
+        //}
+
     }
 }
