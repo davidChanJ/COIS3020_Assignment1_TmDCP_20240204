@@ -12,33 +12,62 @@ namespace COIS3020_Assignment1_TmDC_20240204
     {
         public static void Main(string[] args)
         {
-            Test.testInternet();
-            //ServerGraph serverGraph = new ServerGraph();
-            //WebGraph webGraph = new WebGraph();
+            // Instantiate a server graph and a web graph
+            ServerGraph sg = new ServerGraph();
+            WebGraph wg = new WebGraph();
 
-            //serverGraph.AddServer("FstServer", "Mal"); //Adding number of servers
-            //serverGraph.AddConnection("FstServer", "Server2");   //Adding connections between servers
+            // Add servers
+            sg.AddServer("server1", "server2");
+            sg.AddServer("server2", "server1");
+            sg.AddServer("server3", "server1");
+            sg.AddServer("server4", "server1");
+            sg.AddServer("server5", "server1");
+            sg.AddServer("server6", "server5");
 
-            ////Adding number of webpages to various servers
-            //serverGraph.AddServer("Server2", "FstServer"); //Adding another server
-            //serverGraph.AddWebPage(new WebPage("WebPage1", "FstServer"), "FstServer");
-            //serverGraph.AddWebPage(new WebPage("WebPage2", "Server2"), "Server2");
+            // add additional connections between servers
+            sg.AddConnection("server5", "server2");
+            sg.AddConnection("server4", "server2");
+            sg.AddConnection("server6", "server3");
 
-            ////Removing both webpages and servers
-            //webGraph.RemovePage("Webpage2", serverGraph);
-            //serverGraph.RemoveServer("Server2", "FstServer");
+            // check critical server
 
-            ////Determine the articulation points of the remaining internet
-            //string[] articulationPoints = serverGraph.CriticalServers();
+            // add webpages to servers
+            wg.AddPage("webPage 1", "server3", sg);
+            wg.AddPage("webPage 2", "server2", sg);
+            wg.AddPage("webPage 3", "server1", sg);
+            wg.AddPage("webPage 4", "server1", sg);
+            wg.AddPage("webPage 5", "server1", sg);
 
-            ////Output parts
-            //Console.WriteLine("Articulation Points: ");
-            //foreach (string point in articulationPoints)
-            //    Console.WriteLine(point);
+            //add and remove hyperlinks between webpages
+            wg.AddLink("webPage 1", "webPage 2");
+            wg.AddLink("webPage 3", "webPage 4");
+            wg.AddLink("webPage 3", "webPage 2");
+            wg.AddLink("webPage 3", "webPage 1");
+            wg.AddLink("webPage 4", "webPage 3");
 
-            //serverGraph.PrintGraph();
+            wg.RemoveLink("webPage 3", "webPage 1");
+            wg.RemoveLink("webPage 1", "webPage 2");
 
-            //webGraph.PrintGraph();
+            // remove webpages
+            wg.RemovePage("webPage 2", sg);
+            wg.RemovePage("webPage 5", sg);
+
+            // remove servers
+            sg.RemoveServer("server6", "server5");
+
+            // determine articulation points
+            string[] articulationPoints = sg.CriticalServers();
+            Console.Write("Articulation points: ");
+            if (articulationPoints.Length > 0)
+            {
+                Console.WriteLine(string.Join(", ", articulationPoints));
+            } else
+            {
+                Console.WriteLine("none");
+            }
+
+            double averageShortestDistance = wg.AvgShortestPaths("webPage 3", sg);
+            Console.WriteLine("Average shortest distance of webPage 3:", averageShortestDistance);
 
 
         }

@@ -282,12 +282,15 @@ namespace COIS3020_Assignment1_TmDC_20240204
         {
             //string[] criticalServers = new string[NumServers];
             List<string> criticalServers = new List<string>();
+            // let i be the articulation point
             for (int i = 0; i < NumServers; i++)
             {
                 bool[] visited = new bool[NumServers];
                 // assume i is the critical point
                 visited[i] = true;
-                dfs(i, visited);
+                // start travelling from any index other than i
+                int startIndex = i - 1 < 0 ? NumServers - 1 : i - 1;
+                dfs(startIndex, visited);
                 int numberOfVisited = visited.Count(c => c);
                 // if i is critical point, numerOfVisited is then smaller than NumServers
                 if (numberOfVisited < NumServers)
