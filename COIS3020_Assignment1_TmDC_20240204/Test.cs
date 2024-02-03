@@ -19,8 +19,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //RemoveServer(): OK (3)
             //DoubleCapacity(): OK (4)
             //PrintGraph(): OK  (5)
-            //FindServer(): OK
-            //RemoveWebPage(): OK
+            //FindServer(): OK  (6)
+            //RemoveWebPage(): OK (7)
             //CriticalServers(): Showing STRING[] as output (Thank you, Sam)
             //ShortestPath: OK
 
@@ -50,7 +50,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 Console.WriteLine("The AddConnection method is working, now ('server','server3') is connected! \n");
                 server.AddConnection("server", "server3");
             }
-            else Console.WriteLine("Failed");
+            else Console.WriteLine("Failed \n");
 
             WebPage NoSite = new WebPage("333", "no");
             server.AddWebPage(NoSite, "server3");
@@ -62,8 +62,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 server.RemoveServer("server3", "server");
                 Console.WriteLine("The RemoveServer method is working, now ('server3','server') is connected! \n");
             }
-
-            else Console.WriteLine("god please kill me\n");
+            else Console.WriteLine("Failed \n");
 
             //Find server
             Console.WriteLine("Test 4 Finding the Server:");
@@ -71,28 +70,38 @@ namespace COIS3020_Assignment1_TmDC_20240204
             Console.WriteLine("Server at: " + server.findServer("server2"));
             Console.WriteLine("If the numbers show non -1 values, then the findServer works");
 
-            //Double capacity
+            //Double capacity (5)
             server.doubleCapacity();
 
-            //Printing graphs
-            Console.WriteLine("Printing graphs: \n");
+            //Printing graphs (6)
+            Console.WriteLine("Test 6 Printing Graphs: \n");
             Console.WriteLine("One: ");
             server.PrintGraph();
 
-            server.RemoveWebPage("333", "meme");
+            Console.WriteLine("Test 7 Removing a server");
+            if (server.RemoveWebPage("333", "no") == true) {
+                server.RemoveWebPage("333", "no");
+                Console.WriteLine("The WebPage is removed 333 hosted by no completed \n");
+            }
+            else
+                Console.WriteLine("Failed \n");
 
+            Console.WriteLine("Server graph after Test 7:");
             Console.WriteLine("Two: ");
             server.PrintGraph();
 
-            Console.WriteLine("Testing Shortest Path test:");
+            //(8)
+            Console.WriteLine("\nTest 8 Shortest Path: ");
             Console.WriteLine("Shortest path between server2 & server3: " + server.ShortestPath("server2", "server3"));
             Console.WriteLine("Shortest path between server3 & server2: " + server.ShortestPath("server3", "server2"));
             Console.WriteLine("Showing numbers can mean ShortestPath() works");
 
-            string[] critSev = server.CriticalServers();
+            //(9)
+            Console.WriteLine("\nTest 9 CriticalServers method: ");
+            string[] critSev = server.CriticalServers2();
             if (critSev.Length > 0)
             {
-                Console.WriteLine(string.Join(", ", critSev));
+                Console.WriteLine("Critial Server: " + string.Join(", ", critSev) + "\n");
             }
 
             //Part 2: Testing for WebGraph
