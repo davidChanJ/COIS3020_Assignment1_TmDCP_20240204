@@ -27,20 +27,22 @@ namespace COIS3020_Assignment1_TmDC_20240204
         private bool[,] E;
         private int NumServers;
         public int NumServersValue { get { return NumServers; } }
-    
+
         // Create an empty server graph
         public ServerGraph()
         {
             NumServers = 0;
             V = new WebServer[5];
-            E = new bool[5,5] ;
+            E = new bool[5, 5];
         }
 
         // Return the index of the server with the given name; otherwise return -1
         private int FindServer(string name)
         {
-            for (int i = 0; i <NumServers; i++) {
-                if (V[i].Name.Equals(name)) {
+            for (int i = 0; i < NumServers; i++)
+            {
+                if (V[i].Name.Equals(name))
+                {
                     return i;
                 }
             }
@@ -55,11 +57,13 @@ namespace COIS3020_Assignment1_TmDC_20240204
             Array.Resize(ref V, nCapacity);
 
             //Creating a new E matrix
-            bool[,] nEMatrix = new bool[nCapacity,nCapacity];
+            bool[,] nEMatrix = new bool[nCapacity, nCapacity];
             //for loop:
-            for (int i = 0;i < E.GetLength(0); i++) {
-                for (int j = 0;j < E.GetLength(1); j++) {
-                    nEMatrix[i,j] = E[i,j];    
+            for (int i = 0; i < E.GetLength(0); i++)
+            {
+                for (int j = 0; j < E.GetLength(1); j++)
+                {
+                    nEMatrix[i, j] = E[i, j];
                 }
             }
             E = nEMatrix;
@@ -70,10 +74,10 @@ namespace COIS3020_Assignment1_TmDC_20240204
         public bool AddServer(string name, string other)
         {
             // return false if server is already exists
-            if(FindServer(name) != -1) return false;
+            if (FindServer(name) != -1) return false;
 
             // double the capacity if NumServers >= V.Length
-            if(NumServers >= V.Length) DoubleCapacity();
+            if (NumServers >= V.Length) DoubleCapacity();
 
             // create new web server with given name
             WebServer nServer = new WebServer(name);
@@ -81,7 +85,8 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
             // connect the new server with other server
             int indexOther = FindServer(other);
-            if (indexOther != -1) {
+            if (indexOther != -1)
+            {
                 E[NumServers, indexOther] = true;
                 E[indexOther, NumServers] = true;
             }
@@ -105,7 +110,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
             // add webpage to the sever
             V[serverIndex].P.Add(w);
-            return true; 
+            return true;
         }
 
         // Remove the server with the given name by assigning its connections
@@ -117,30 +122,32 @@ namespace COIS3020_Assignment1_TmDC_20240204
             int i = FindServer(name);
             // index of other
             int j = FindServer(other);
-            
-            if (i> -1 && j > -1) { //Finding if the server is listed
+
+            if (i > -1 && j > -1)
+            { //Finding if the server is listed
                 //Creating connections by switching from and to
                 // assign connection of name to other
-                for(int h = 0; h < NumServers; h++)
+                for (int h = 0; h < NumServers; h++)
                 {
-                    if (E[i, h] == true) {
+                    if (E[i, h] == true)
+                    {
                         E[i, h] = false;
                         E[h, i] = false;
                         E[j, h] = true;
                         E[h, j] = true;
                     }
-                        
+
                 }
 
                 // assign webpage of name to other
-                for (int k = 0; k < V[i].P.Count; k ++)
+                for (int k = 0; k < V[i].P.Count; k++)
                 {
                     //insert page into other server
                     V[j].P.Add(V[i].P[k]);
                 }
 
                 //swap i with the last vertex(include V and E)
-                for (int k = 0; k<NumServers; k ++)
+                for (int k = 0; k < NumServers; k++)
                 {
                     E[i, k] = E[NumServers - 1, k];
                     E[k, i] = E[k, NumServers - 1];
@@ -195,8 +202,10 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //Set variables
             int i, j;
             //Creating a connection if origin and destiation exist
-            if ((i = FindServer(from)) > -1 && (j = FindServer(to)) > -1) {
-                if (E[i, j] == false) {    //Seek if the connection doesn't exist, then the statement makes the connection exists
+            if ((i = FindServer(from)) > -1 && (j = FindServer(to)) > -1)
+            {
+                if (E[i, j] == false)
+                {    //Seek if the connection doesn't exist, then the statement makes the connection exists
                     //Connecting route from i to j
                     E[i, j] = true;
                     E[j, i] = true;
@@ -210,101 +219,117 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // two or more disjoint graphs if ever one of them would go down
         // Hint: Use a variation of the depth-first search
 
-        public string[] CriticalServers2()
+        //public string[] CriticalServers2()
+        //{
+        //    bool[] visited = new bool[NumServers];
+        //    int[] discoveryTime = new int[NumServers];
+        //    int[] low = new int[NumServers];
+        //    int[] parent = new int[NumServers];
+        //    bool[] articulationPoint = new bool[NumServers];
+        //    int time = 0;
+
+        //    // Initialize arrays
+        //    for (int i = 0; i < NumServers; i++)
+        //    {
+        //        parent[i] = -1;
+        //        visited[i] = false;
+        //        articulationPoint[i] = false;
+        //    }
+
+        //    // Perform DFS for each unvisited vertex
+        //    for (int i = 0; i < NumServers; i++)
+        //    {
+        //        if (!visited[i])
+        //            CriticalServersDFS(i, visited, discoveryTime, low, parent, ref articulationPoint, ref time);
+        //    }
+
+        //    // Collect and return the names of articulation points
+        //    List<string> criticalServers = new List<string>();
+        //    for (int i = 0; i < NumServers; i++)
+        //    {
+        //        if (articulationPoint[i])
+        //            criticalServers.Add(V[i].Name);
+        //    }
+
+        //    return criticalServers.ToArray();
+        //}
+
+        //Another CriticalServers Method:
+        // Utility method to perform DFS and find articulation points
+        private void DFSUtil(int u, bool[] visited, int[] disc, int[] low, int?[] parent, bool[] ap)
         {
-            bool[] visited = new bool[NumServers];
-            int[] discoveryTime = new int[NumServers];
-            int[] low = new int[NumServers];
-            int[] parent = new int[NumServers];
-            bool[] articulationPoint = new bool[NumServers];
+            // A static variable to keep track of the discovery time
             int time = 0;
-
-            // Initialize arrays
-            for (int i = 0; i < NumServers; i++)
-            {
-                parent[i] = -1;
-                visited[i] = false;
-                articulationPoint[i] = false;
-            }
-
-            // Perform DFS for each unvisited vertex
-            for (int i = 0; i < NumServers; i++)
-            {
-                if (!visited[i])
-                    CriticalServersDFS(i, visited, discoveryTime, low, parent, ref articulationPoint, ref time);
-            }
-
-            // Collect and return the names of articulation points
-            List<string> criticalServers = new List<string>();
-            for (int i = 0; i < NumServers; i++)
-            {
-                if (articulationPoint[i])
-                    criticalServers.Add(V[i].Name);
-            }
-
-            return criticalServers.ToArray();
-        }
-
-        private void CriticalServersDFS(int u, bool[] visited, int[] discoveryTime, int[] low, int[] parent, ref bool[] articulationPoint, ref int time)
-        {
-            int children = 0;
+            int children = 0; // Count of children in the DFS tree
             visited[u] = true;
-            discoveryTime[u] = low[u] = ++time;
+            disc[u] = low[u] = ++time; // Initialize discovery time and low value
 
             for (int v = 0; v < NumServers; v++)
             {
+                // Go through all vertices adjacent to this
                 if (E[u, v])
                 {
                     if (!visited[v])
                     {
                         children++;
                         parent[v] = u;
-                        CriticalServersDFS(v, visited, discoveryTime, low, parent, ref articulationPoint, ref time);
+                        DFSUtil(v, visited, disc, low, parent, ap);
 
                         // Check if the subtree rooted with v has a connection to one of the ancestors of u
                         low[u] = Math.Min(low[u], low[v]);
 
-                        // u is an articulation point in following cases:
-                        // (1) u is root of DFS tree and has two or more children.
-                        // (2) If u is not root and low value of one of its children is more than discovery value of u.
-                        if (parent[u] == -1 && children > 1)
-                            articulationPoint[u] = true;
-                        if (parent[u] != -1 && low[v] >= discoveryTime[u])
-                            articulationPoint[u] = true;
+                        // u is an articulation point in the following cases
+
+                        // (1) u is root of DFS tree and has two or more children
+                        if (parent[u] == null && children > 1)
+                            ap[u] = true;
+
+                        // (2) If u is not root and low value of one of its child is more than discovery value of u
+                        if (parent[u] != null && low[v] >= disc[u])
+                            ap[u] = true;
                     }
                     else if (v != parent[u])
-                        low[u] = Math.Min(low[u], discoveryTime[v]);
+                    {
+                        low[u] = Math.Min(low[u], disc[v]);
+                    }
                 }
             }
         }
 
-        //Suggested to use CriticalServers() than CriticialServers2()
+        // The function to find and return all critical servers
         public string[] CriticalServers()
         {
-            //string[] criticalServers = new string[NumServers];
-            List<string> criticalServers = new List<string>();
-            // let i be the articulation point
+            // Mark all the vertices as not visited
+            bool[] visited = new bool[NumServers];
+            int[] disc = new int[NumServers]; // To store discovery times of visited vertices
+            int[] low = new int[NumServers]; // To store earliest visited vertex (the low value)
+            int?[] parent = new int?[NumServers]; // To store parent vertices in DFS tree
+            bool[] ap = new bool[NumServers]; // To store articulation points
+
+            // Initialize parent and visited, and ap (articulation point) arrays
             for (int i = 0; i < NumServers; i++)
             {
-                bool[] visited = new bool[NumServers];
-                // assume i is the critical point
-                visited[i] = true;
-                // start travelling from any index other than i
-                int startIndex = i - 1 < 0 ? NumServers - 1 : i - 1;
-                dfs(startIndex, visited);
-                int numberOfVisited = visited.Count(c => c);
-                // if i is critical point, numerOfVisited is then smaller than NumServers
-                if (numberOfVisited < NumServers)
-                {
-                    criticalServers.Add(V[i].Name);
-                }
+                parent[i] = null;
+                visited[i] = false;
+                ap[i] = false;
             }
+
+            // Call the recursive helper function to find articulation points in DFS tree rooted with vertex 'i'
+            for (int i = 0; i < NumServers; i++)
+                if (!visited[i])
+                    DFSUtil(i, visited, disc, low, parent, ap);
+
+            // Now ap[] contains articulation points, process them
+            List<string> criticalServers = new List<string>();
+            for (int i = 0; i < NumServers; i++)
+                if (ap[i])
+                    criticalServers.Add(V[i].Name);
+
             return criticalServers.ToArray();
         }
-
         private void dfs(int index, bool[] visited)
         {
-            for (int i = 0; i < NumServers; i ++)
+            for (int i = 0; i < NumServers; i++)
             {
                 if (E[index, i])
                 {
@@ -316,6 +341,78 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 }
             }
         }
+
+        //private void CriticalServersDFS(int u, bool[] visited, int[] discoveryTime, int[] low, int[] parent, ref bool[] articulationPoint, ref int time)
+        //{
+        //    int children = 0;
+        //    visited[u] = true;
+        //    discoveryTime[u] = low[u] = ++time;
+
+        //    for (int v = 0; v < NumServers; v++)
+        //    {
+        //        if (E[u, v])
+        //        {
+        //            if (!visited[v])
+        //            {
+        //                children++;
+        //                parent[v] = u;
+        //                CriticalServersDFS(v, visited, discoveryTime, low, parent, ref articulationPoint, ref time);
+
+        //                // Check if the subtree rooted with v has a connection to one of the ancestors of u
+        //                low[u] = Math.Min(low[u], low[v]);
+
+        //                // u is an articulation point in following cases:
+        //                // (1) u is root of DFS tree and has two or more children.
+        //                // (2) If u is not root and low value of one of its children is more than discovery value of u.
+        //                if (parent[u] == -1 && children > 1)
+        //                    articulationPoint[u] = true;
+        //                if (parent[u] != -1 && low[v] >= discoveryTime[u])
+        //                    articulationPoint[u] = true;
+        //            }
+        //            else if (v != parent[u])
+        //                low[u] = Math.Min(low[u], discoveryTime[v]);
+        //        }
+        //    }
+        //}
+
+        //Suggested to use CriticalServers() than CriticialServers2()
+        //public string[] CriticalServers()
+        //{
+        //    //string[] criticalServers = new string[NumServers];
+        //    List<string> criticalServers = new List<string>();
+        //    // let i be the articulation point
+        //    for (int i = 0; i < NumServers; i++)
+        //    {
+        //        bool[] visited = new bool[NumServers];
+        //        // assume i is the critical point
+        //        visited[i] = true;
+        //        // start travelling from any index other than i
+        //        int startIndex = i - 1 < 0 ? NumServers - 1 : i - 1;
+        //        dfs(startIndex, visited);
+        //        int numberOfVisited = visited.Count(c => c);
+        //        // if i is critical point, numerOfVisited is then smaller than NumServers
+        //        if (numberOfVisited < NumServers)
+        //        {
+        //            criticalServers.Add(V[i].Name);
+        //        }
+        //    }
+        //    return criticalServers.ToArray();
+        //}
+
+        //private void dfs(int index, bool[] visited)
+        //{
+        //    for (int i = 0; i < NumServers; i ++)
+        //    {
+        //        if (E[index, i])
+        //        {
+        //            if (!visited[i])
+        //            {
+        //                visited[index] = true;
+        //                dfs(i, visited);
+        //            }
+        //        }
+        //    }
+        //}
 
 
         // 6 marks
@@ -435,32 +532,22 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
         public string GetServerNameByWebPageName(string webPageName)
         {
-            foreach(WebServer webServer in V)
+            foreach (WebServer webServer in V)
             {
-                foreach(WebPage webPage in webServer.P)
+                // Check if webServer is not null before accessing its properties
+                if (webServer != null)
                 {
-                    if (webPage.Name.Equals(webPageName))
+                    foreach (WebPage webPage in webServer.P)
                     {
-                        return webServer.Name;
+                        if (webPage.Name.Equals(webPageName))
+                        {
+                            return webServer.Name;
+                        }
                     }
                 }
             }
 
             return "";
         }
-
-        //tempororary test:
-        //public void doubleCapacity()
-        //{
-        //    DoubleCapacity();
-        //}
-
-        //public int findServer(string name)
-        //{
-        //    return FindServer(name);
-        //}
     }
 }
-
-
-

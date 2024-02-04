@@ -170,7 +170,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             }
             if (reachableWebPage > 0)
                 return (float)totalLength / reachableWebPage;
-            
+
             return 0;
         }
         // 3 marks
