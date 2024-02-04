@@ -278,6 +278,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             }
         }
 
+        //Suggested to use CriticalServers() than CriticialServers2()
         public string[] CriticalServers()
         {
             //string[] criticalServers = new string[NumServers];

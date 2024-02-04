@@ -116,13 +116,13 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
             //Part 2: Testing for WebGraph
             //Method Progress:
-            //FindPage(): 
+            //FindPage(): (14)
             //AddPage(): OK (10)
             //RemovePage(): OK (11)
             //AddLink(): OK (12)
             //RemoveLink(): OK? tue moi (12)
-            //AvgShortestPaths(): OK? Can work, late to expected
-            //PrintGraph(): OK
+            //AvgShortestPaths(): OK? Can work, late to expected (15)
+            //PrintGraph(): OK (13)
 
             WebGraph webGraph = new WebGraph();
             WebPage YesSite = new WebPage("555", "nnn");
