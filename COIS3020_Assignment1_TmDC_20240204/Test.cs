@@ -123,7 +123,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //RemovePage(): OK (11)
             //AddLink(): OK (12)
             //RemoveLink(): OK? tue moi (12)
-            //AvgShortestPaths(): OK? Can work, late to expected (15)
+            //AvgShortestPaths(): OK? Can work, late to expected (14a)
             //PrintGraph(): OK (13)
 
             WebGraph webGraph = new WebGraph();
@@ -181,10 +181,15 @@ namespace COIS3020_Assignment1_TmDC_20240204
             Console.WriteLine("\nTest 13 -- Showing the web graph");
             webGraph.PrintGraph();
 
-            Console.WriteLine("\nTest 14 -- Showing the short paths:");
+            Console.WriteLine("\nTest 14a -- Showing the short paths:");
             Console.WriteLine("Average avg shortest paths for Mahah: " + webGraph.AvgShortestPaths("Mahah", server) + "");
             Console.WriteLine("For finding link Paracal in NoSite: " + NoSite.FindLink("Paracal") );
             Console.WriteLine("For finding link Paracal in YesSite: " + YesSite.FindLink("Paracal") + "\n");
+
+            Console.WriteLine("\nTest 14b -- Showing the short paths:");
+            Console.WriteLine("The FindPage method is for finding a name, to make it public to successfully do the test:");
+            Console.WriteLine("For example, we find Paracal: ");
+            Console.WriteLine("The Paracal is at: {0}", webGraph.findPage("Paracal"));
 
             Console.WriteLine("\nTest 15 -- Finding a link:");
             WebPage page1 = new WebPage("Home", "Server1");
@@ -202,7 +207,6 @@ namespace COIS3020_Assignment1_TmDC_20240204
             Console.WriteLine($"Searching for 'Contact': {page1.FindLink("Contact")}");
             Console.WriteLine($"Searching for 'NonExistingPage': {page1.FindLink("NonExistingPage")}");
 
-            //Find link:
         }
 
         public static void testViaSam()

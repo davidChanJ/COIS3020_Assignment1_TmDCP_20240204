@@ -15,6 +15,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             //Testing
             //Test.testInternet();
             //Test.testViaSam();
+            
             // Instantiate a server graph and a web graph
             ServerGraph sg = new ServerGraph();
             WebGraph wg = new WebGraph();

@@ -18,15 +18,6 @@ namespace COIS3020_Assignment1_TmDC_20240204
 
         public int FindLink(string name)
         {
-            ////Searching the link among the matrix via for-loop in indecies;
-            //for (int i = 0; i < E.Count; i++)
-            //{ //finding through the list of websites
-            //    if (E[i].Name == name)
-            //        return i;   //link connection exists
-            //}
-            //// no link which have the given name
-            //return -1;
-
             // New FindLink// Check if the current page is the one we're looking for
             if (this.Name == name) return 1;
 
@@ -68,26 +59,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Return true if successful; otherwise return false
         public bool AddPage(string name, string host, ServerGraph S)
         {
-            //if (FindPage(name) != -1)
-            //{
-            //    return false; // Means page with name assigned already exists
-            //}
-            ////Process of creating a webpage:
-            //WebPage np = new WebPage(name, host);
-
-            //// add webpage to server
-            //// if return false means host is not exist and not adding the new page to P
-            //if (!S.AddWebPage(np, host))
-            //{
-            //    return false;
-            //}
-            //P.Add(np);
-            //return true;
-
-            //Updated part:
-            // 4 marks Pirakash
-            // Add a webpage with the given name and store it on the host server // Return true if successful; otherwise return false 
-                // Implementation for adding a page
+            // Implementation for adding a page
             if (FindPage(name) == -1)
             {
                 P.Add(new WebPage(name, host));
@@ -196,6 +168,11 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 Console.WriteLine("; ");
             }
             Console.WriteLine();
+        }
+
+        public int findPage(string name)
+        {
+            return FindPage(name);
         }
     }
 }
