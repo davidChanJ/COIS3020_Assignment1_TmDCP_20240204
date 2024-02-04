@@ -13,7 +13,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
         public static void Main(string[] args)
         {
             //Testing
-            Test.testInternet();
+            //Test.testInternet();
             // Instantiate a server graph and a web graph
             ServerGraph sg = new ServerGraph();
             WebGraph wg = new WebGraph();

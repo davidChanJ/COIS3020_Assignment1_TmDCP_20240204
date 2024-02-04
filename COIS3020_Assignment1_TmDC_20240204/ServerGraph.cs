@@ -450,15 +450,15 @@ namespace COIS3020_Assignment1_TmDC_20240204
         }
 
         //tempororary test:
-        public void doubleCapacity()
-        {
-            DoubleCapacity();
-        }
+        //public void doubleCapacity()
+        //{
+        //    DoubleCapacity();
+        //}
 
-        public int findServer(string name)
-        {
-            return FindServer(name);
-        }
+        //public int findServer(string name)
+        //{
+        //    return FindServer(name);
+        //}
     }
 }
 
