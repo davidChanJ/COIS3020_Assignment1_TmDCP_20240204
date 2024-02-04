@@ -319,7 +319,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 {
                     if (!visited[i])
                     {
-                        visited[index] = true;
+                        visited[i] = true;
                         dfs(i, visited);
                     }
                 }
