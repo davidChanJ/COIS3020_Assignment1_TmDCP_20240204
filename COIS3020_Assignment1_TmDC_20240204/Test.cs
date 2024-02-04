@@ -177,14 +177,18 @@ namespace COIS3020_Assignment1_TmDC_20240204
             webGraph.AddLink("Mahah", "Paracal");
             webGraph.AddLink("abcd", "Paracal");
 
-            //webGraph.PrintGraph();
+            Console.WriteLine("\nTest 13 -- Showing the graph");
+            webGraph.PrintGraph();
 
-            ////Goes for website thing
-            //Console.Write(YesSite.FindLink("Sam") + "\n");
-            //webGraph.PrintGraph();
-            //Console.WriteLine("Average avg shortest paths for Mahah: " + webGraph.AvgShortestPaths("Mahah", server));
-            //Console.Write(NoSite.FindLink("Malabol") + "\n");
-            //Console.WriteLine("\n" + YesSite.FindLink("Malabol"));
+            //Goes for website thing
+            Console.WriteLine("\nTest 14 -- Finding the link");
+            Console.Write(YesSite.FindLink("Sam") + "\n");
+            webGraph.PrintGraph();
+
+            Console.WriteLine("\nTest 15 -- Showing the short paths:");
+            Console.WriteLine("Average avg shortest paths for Mahah: " + webGraph.AvgShortestPaths("Mahah", server) + "");
+            Console.Write(NoSite.FindLink("Malabol") + "\n");
+            Console.WriteLine("\n" + YesSite.FindLink("Malabol") + "\n");
 
             //Find link:
         }
