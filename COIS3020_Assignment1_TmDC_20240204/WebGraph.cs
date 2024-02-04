@@ -19,13 +19,25 @@ namespace COIS3020_Assignment1_TmDC_20240204
         public int FindLink(string name)
         {
             ////Searching the link among the matrix via for-loop in indecies;
-            for (int i = 0; i < E.Count; i++)
-            { //finding through the list of websites
-                if (E[i].Name == name)
-                    return i;   //link connection exists
+            //for (int i = 0; i < E.Count; i++)
+            //{ //finding through the list of websites
+            //    if (E[i].Name == name)
+            //        return i;   //link connection exists
+            //}
+            //// no link which have the given name
+            //return -1;
+
+            // New FindLink// Check if the current page is the one we're looking for
+            if (this.Name == name) return 1;
+
+            // Recursively search in linked pages
+            foreach (var linkedPage in E)
+            {
+                if (linkedPage.FindLink(name) == 1) return 1; // Found
             }
-            // no link which have the given name
-            return -1;
+
+            // Not found in this branch of the graph
+            return 0;
         }
     }
     class WebGraph

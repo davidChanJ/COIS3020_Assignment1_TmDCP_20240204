@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 namespace COIS3020_Assignment1_TmDC_20240204
@@ -136,7 +137,6 @@ namespace COIS3020_Assignment1_TmDC_20240204
                         E[j, h] = true;
                         E[h, j] = true;
                     }
-
                 }
 
                 // assign webpage of name to other
@@ -254,79 +254,63 @@ namespace COIS3020_Assignment1_TmDC_20240204
         //    return criticalServers.ToArray();
         //}
 
-        //Another CriticalServers Method:
-        // Utility method to perform DFS and find articulation points
-        private void DFSUtil(int u, bool[] visited, int[] disc, int[] low, int?[] parent, bool[] ap)
+        private void CriticalServersDFS(int u, bool[] visited, int[] discoveryTime, int[] low, int[] parent, ref bool[] articulationPoint, ref int time)
         {
-            // A static variable to keep track of the discovery time
-            int time = 0;
-            int children = 0; // Count of children in the DFS tree
+            int children = 0;
             visited[u] = true;
-            disc[u] = low[u] = ++time; // Initialize discovery time and low value
+            discoveryTime[u] = low[u] = ++time;
 
             for (int v = 0; v < NumServers; v++)
             {
-                // Go through all vertices adjacent to this
                 if (E[u, v])
                 {
                     if (!visited[v])
                     {
                         children++;
                         parent[v] = u;
-                        DFSUtil(v, visited, disc, low, parent, ap);
+                        CriticalServersDFS(v, visited, discoveryTime, low, parent, ref articulationPoint, ref time);
 
                         // Check if the subtree rooted with v has a connection to one of the ancestors of u
                         low[u] = Math.Min(low[u], low[v]);
 
-                        // u is an articulation point in the following cases
-
-                        // (1) u is root of DFS tree and has two or more children
-                        if (parent[u] == null && children > 1)
-                            ap[u] = true;
-
-                        // (2) If u is not root and low value of one of its child is more than discovery value of u
-                        if (parent[u] != null && low[v] >= disc[u])
-                            ap[u] = true;
+                        // u is an articulation point in following cases:
+                        // (1) u is root of DFS tree and has two or more children.
+                        // (2) If u is not root and low value of one of its children is more than discovery value of u.
+                        if (parent[u] == -1 && children > 1)
+                            articulationPoint[u] = true;
+                        if (parent[u] != -1 && low[v] >= discoveryTime[u])
+                            articulationPoint[u] = true;
                     }
                     else if (v != parent[u])
-                    {
-                        low[u] = Math.Min(low[u], disc[v]);
-                    }
+                        low[u] = Math.Min(low[u], discoveryTime[v]);
                 }
             }
         }
 
-        // The function to find and return all critical servers
+        //Suggested to use CriticalServers() than CriticialServers2()
         public string[] CriticalServers()
         {
-            // Mark all the vertices as not visited
-            bool[] visited = new bool[NumServers];
-            int[] disc = new int[NumServers]; // To store discovery times of visited vertices
-            int[] low = new int[NumServers]; // To store earliest visited vertex (the low value)
-            int?[] parent = new int?[NumServers]; // To store parent vertices in DFS tree
-            bool[] ap = new bool[NumServers]; // To store articulation points
-
-            // Initialize parent and visited, and ap (articulation point) arrays
+            //string[] criticalServers = new string[NumServers];
+            List<string> criticalServers = new List<string>();
+            // let i be the articulation point
             for (int i = 0; i < NumServers; i++)
             {
-                parent[i] = null;
-                visited[i] = false;
-                ap[i] = false;
-            }
-
-            // Call the recursive helper function to find articulation points in DFS tree rooted with vertex 'i'
-            for (int i = 0; i < NumServers; i++)
-                if (!visited[i])
-                    DFSUtil(i, visited, disc, low, parent, ap);
-
-            // Now ap[] contains articulation points, process them
-            List<string> criticalServers = new List<string>();
-            for (int i = 0; i < NumServers; i++)
-                if (ap[i])
+                bool[] visited = new bool[NumServers];
+                // assume i is the critical point
+                visited[i] = true;
+                // start travelling from any index other than i
+                int startIndex = i - 1 < 0 ? NumServers - 1 : i - 1;
+                dfs(startIndex, visited);
+                int numberOfVisited = visited.Count(c => c);
+                // if i is critical point, numerOfVisited is then smaller than NumServers
+                if (numberOfVisited < NumServers)
+                {
                     criticalServers.Add(V[i].Name);
-
+                }
+            }
             return criticalServers.ToArray();
         }
+
         private void dfs(int index, bool[] visited)
         {
             for (int i = 0; i < NumServers; i++)
@@ -341,78 +325,6 @@ namespace COIS3020_Assignment1_TmDC_20240204
                 }
             }
         }
-
-        //private void CriticalServersDFS(int u, bool[] visited, int[] discoveryTime, int[] low, int[] parent, ref bool[] articulationPoint, ref int time)
-        //{
-        //    int children = 0;
-        //    visited[u] = true;
-        //    discoveryTime[u] = low[u] = ++time;
-
-        //    for (int v = 0; v < NumServers; v++)
-        //    {
-        //        if (E[u, v])
-        //        {
-        //            if (!visited[v])
-        //            {
-        //                children++;
-        //                parent[v] = u;
-        //                CriticalServersDFS(v, visited, discoveryTime, low, parent, ref articulationPoint, ref time);
-
-        //                // Check if the subtree rooted with v has a connection to one of the ancestors of u
-        //                low[u] = Math.Min(low[u], low[v]);
-
-        //                // u is an articulation point in following cases:
-        //                // (1) u is root of DFS tree and has two or more children.
-        //                // (2) If u is not root and low value of one of its children is more than discovery value of u.
-        //                if (parent[u] == -1 && children > 1)
-        //                    articulationPoint[u] = true;
-        //                if (parent[u] != -1 && low[v] >= discoveryTime[u])
-        //                    articulationPoint[u] = true;
-        //            }
-        //            else if (v != parent[u])
-        //                low[u] = Math.Min(low[u], discoveryTime[v]);
-        //        }
-        //    }
-        //}
-
-        //Suggested to use CriticalServers() than CriticialServers2()
-        //public string[] CriticalServers()
-        //{
-        //    //string[] criticalServers = new string[NumServers];
-        //    List<string> criticalServers = new List<string>();
-        //    // let i be the articulation point
-        //    for (int i = 0; i < NumServers; i++)
-        //    {
-        //        bool[] visited = new bool[NumServers];
-        //        // assume i is the critical point
-        //        visited[i] = true;
-        //        // start travelling from any index other than i
-        //        int startIndex = i - 1 < 0 ? NumServers - 1 : i - 1;
-        //        dfs(startIndex, visited);
-        //        int numberOfVisited = visited.Count(c => c);
-        //        // if i is critical point, numerOfVisited is then smaller than NumServers
-        //        if (numberOfVisited < NumServers)
-        //        {
-        //            criticalServers.Add(V[i].Name);
-        //        }
-        //    }
-        //    return criticalServers.ToArray();
-        //}
-
-        //private void dfs(int index, bool[] visited)
-        //{
-        //    for (int i = 0; i < NumServers; i ++)
-        //    {
-        //        if (E[index, i])
-        //        {
-        //            if (!visited[i])
-        //            {
-        //                visited[index] = true;
-        //                dfs(i, visited);
-        //            }
-        //        }
-        //    }
-        //}
 
 
         // 6 marks
@@ -548,6 +460,16 @@ namespace COIS3020_Assignment1_TmDC_20240204
             }
 
             return "";
+        }
+
+        public int findServer(string name)
+        {
+            return FindServer(name);
+        }
+
+        public void doubleCapacity()
+        {
+            DoubleCapacity();
         }
     }
 }

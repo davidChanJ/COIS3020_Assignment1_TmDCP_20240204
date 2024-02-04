@@ -178,19 +178,29 @@ namespace COIS3020_Assignment1_TmDC_20240204
             webGraph.AddLink("Sam", "Paracal");
             webGraph.AddLink("Mahah", "Paracal");
             webGraph.AddLink("abcd", "Paracal");
-
-            Console.WriteLine("\nTest 13 -- Showing the graph");
+            Console.WriteLine("\nTest 13 -- Showing the web graph");
             webGraph.PrintGraph();
 
-            //Goes for website thing
-            Console.WriteLine("\nTest 14 -- Finding the link");
-            Console.Write(YesSite.FindLink("Sam") + "\n");
-            webGraph.PrintGraph();
-
-            Console.WriteLine("\nTest 15 -- Showing the short paths:");
+            Console.WriteLine("\nTest 14 -- Showing the short paths:");
             Console.WriteLine("Average avg shortest paths for Mahah: " + webGraph.AvgShortestPaths("Mahah", server) + "");
-            Console.Write(NoSite.FindLink("Malabol") + "\n");
-            Console.WriteLine("\n" + YesSite.FindLink("Malabol") + "\n");
+            Console.WriteLine("For finding link Paracal in NoSite: " + NoSite.FindLink("Paracal") );
+            Console.WriteLine("For finding link Paracal in YesSite: " + YesSite.FindLink("Paracal") + "\n");
+
+            Console.WriteLine("\nTest 15 -- Finding a link:");
+            WebPage page1 = new WebPage("Home", "Server1");
+            WebPage page2 = new WebPage("About", "Server1");
+            WebPage page3 = new WebPage("Contact", "Server2");
+            WebPage page4 = new WebPage("Products", "Server2");
+
+            // Link pages together to form a graph
+            page1.E.Add(page2); // Home -> About
+            page2.E.Add(page3); // About -> Contact
+            page1.E.Add(page4); // Home -> Products
+
+            // Test FindLink for existing and non-existing pages
+            Console.WriteLine($"Searching for 'About': {page1.FindLink("About")}");
+            Console.WriteLine($"Searching for 'Contact': {page1.FindLink("Contact")}");
+            Console.WriteLine($"Searching for 'NonExistingPage': {page1.FindLink("NonExistingPage")}");
 
             //Find link:
         }
