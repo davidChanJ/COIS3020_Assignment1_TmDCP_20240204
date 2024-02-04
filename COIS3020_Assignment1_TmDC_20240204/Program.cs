@@ -27,13 +27,25 @@ namespace COIS3020_Assignment1_TmDC_20240204
             sg.AddServer("server5", "server1");
             sg.AddServer("server6", "server5");
 
+            // check critical server
+            string[] articulationPoints2 = sg.CriticalServers();
+            Console.Write("Articulation points: ");
+            if (articulationPoints2.Length > 0)
+            {
+                Console.WriteLine(string.Join(", ", articulationPoints2));
+            }
+            else
+            {
+                Console.WriteLine("none");
+            }
+
+
             // add additional connections between servers
             sg.AddConnection("server5", "server2");
             sg.AddConnection("server4", "server2");
             sg.AddConnection("server6", "server3");
 
-            // check critical server
-
+            
             // add webpages to servers
             wg.AddPage("webPage 1", "server3", sg);
             wg.AddPage("webPage 2", "server2", sg);
@@ -59,7 +71,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             sg.RemoveServer("server6", "server5");
 
             // determine articulation points
-            string[] articulationPoints = sg.CriticalServers();
+            string[] articulationPoints = sg.CriticalServers2();
             Console.Write("Articulation points: ");
             if (articulationPoints.Length > 0)
             {
