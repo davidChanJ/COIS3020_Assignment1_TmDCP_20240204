@@ -59,13 +59,26 @@ namespace COIS3020_Assignment1_TmDC_20240204
         // Return true if successful; otherwise return false
         public bool AddPage(string name, string host, ServerGraph S)
         {
-            // Implementation for adding a page
             if (FindPage(name) == -1)
             {
-                P.Add(new WebPage(name, host));
-                return true;
+                WebPage newPage = new WebPage(name, host);
+                P.Add(newPage);
+
+                // Now, also add the page to the server in ServerGraph
+                foreach (var server in S.VValue) // Using VValue to access the servers
+                {
+                    if (server != null && server.Name == host)
+                    {
+                        server.P.Add(newPage);
+                        Console.WriteLine($"Page {name} added to {host}");
+                        return true;
+                    }
+                }
+
+                Console.WriteLine($"Failed to add page {name} to {host}: Server not found.");
+                return false; // Return false if the server was not found
             }
-            return false;
+            return false; // Return false if the page already exists
         }
         // 8 marks
         // Remove the webpage with the given name, including the hyperlinks
@@ -149,8 +162,12 @@ namespace COIS3020_Assignment1_TmDC_20240204
             foreach (WebPage webPage in P[targetI].E)
             {
                 string toServerName = S.GetServerNameByWebPageName(webPage.Name);
-                totalLength += S.ShortestPath(fromServerName, toServerName);
-                reachableWebPage++;
+                int pathLength = S.ShortestPath(fromServerName, toServerName);
+                if (pathLength >= 0)
+                {
+                    totalLength += pathLength;
+                    reachableWebPage++;
+                }
             }
             if (reachableWebPage > 0)
                 return (float)totalLength / reachableWebPage;

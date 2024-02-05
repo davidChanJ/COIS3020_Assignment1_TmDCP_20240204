@@ -84,7 +84,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             server.doubleCapacity();
 
             //Printing graphs (6)
-            Console.WriteLine("Test 6 Printing Graphs: \n");
+            Console.WriteLine("\nTest 6 Printing Graphs: ");
             Console.WriteLine("One: ");
             server.PrintGraph();
 
@@ -186,7 +186,7 @@ namespace COIS3020_Assignment1_TmDC_20240204
             Console.WriteLine("For finding link Paracal in NoSite: " + NoSite.FindLink("Paracal") );
             Console.WriteLine("For finding link Paracal in YesSite: " + YesSite.FindLink("Paracal") + "\n");
 
-            Console.WriteLine("\nTest 14b -- Showing the short paths:");
+            Console.WriteLine("\nTest 14b -- Finding a page:");
             Console.WriteLine("The FindPage method is for finding a name, to make it public to successfully do the test:");
             Console.WriteLine("For example, we find Paracal: ");
             Console.WriteLine("The Paracal is at: {0}", webGraph.findPage("Paracal"));
@@ -253,6 +253,26 @@ namespace COIS3020_Assignment1_TmDC_20240204
             int shortestPathLength = graph.ShortestPath("Server1", "Server4");
             Console.WriteLine($"Shortest path length from Server1 to Server2: {shortestPathLength}");
 
+        }
+
+        public static void testViaSam2()
+        {
+            ServerGraph serverGraph = new ServerGraph();
+            WebGraph webGraph = new WebGraph();
+
+            serverGraph.AddServer("Server1", "Server2");
+            serverGraph.AddServer("Server2", "Server1");
+            serverGraph.AddServer("Server3", "Server2");
+            webGraph.AddPage("P1", "Server1", serverGraph);
+            webGraph.AddPage("P2", "Server2", serverGraph);
+            webGraph.AddPage("P3", "Server3", serverGraph);
+            webGraph.AddLink("P1", "P3"); // Assuming this links P1 on Server1 to P3 on Server2
+
+
+            webGraph.PrintGraph();
+            float avg = webGraph.AvgShortestPaths("P1", serverGraph);
+            Console.WriteLine(avg);
+            //serverGraph.PrintGraph();
         }
 
     }
